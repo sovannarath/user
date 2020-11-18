@@ -1,7 +1,6 @@
 package com.zillennium.secretary.user.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ public class UserService implements UserServiceInterface{
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
 	public List<User> all() {
 		// TODO Auto-generated method stub
@@ -42,6 +41,11 @@ public class UserService implements UserServiceInterface{
 	public Boolean delete(long id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<User> search(String str){
+		return userRepository.search(str);
 	}
 
 }

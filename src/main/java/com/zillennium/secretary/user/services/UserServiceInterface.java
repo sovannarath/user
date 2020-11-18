@@ -10,4 +10,5 @@ public interface UserServiceInterface {
 	public User create(User user);
 	public User update(User user, long id);
 	public Boolean delete(long id);
+	public List<User> search(String str);
 }
