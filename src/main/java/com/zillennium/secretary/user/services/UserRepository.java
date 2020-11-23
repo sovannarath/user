@@ -12,7 +12,7 @@ import com.zillennium.secretary.user.models.User;
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> {
 	
-	@Query(value="SELECT * FROM users WHERE name LIKE %:str% OR email LIKE %:str% OR phone_number LIKE %:str% OR position LIKE %:str%", nativeQuery=true)
+	@Query(value="SELECT * FROM users WHERE :str", nativeQuery=true)
 	List<User> search(@Param("str")String str);
 	
 }

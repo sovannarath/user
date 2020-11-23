@@ -45,7 +45,19 @@ public class UserService implements UserServiceInterface{
 
 	@Override
 	public List<User> search(String str){
-		return userRepository.search(str);
+		String splits[] = str.split(" ");
+		String sqlCondition = "";
+		for(int i=0; i < splits.length; i++) {
+			String tmpStr = "";
+			if(i == 0) {
+				tmpStr = "name LIKE %" + splits[i] + "%";
+			}else {
+				tmpStr = "AND (SELECT 1 FROM user_contact WHERE users.id = user_contact.user_id AND (SELECT 1 FROM contact_provider WHERE user_contact.provider_id = contact_provider.id AND contact_provider.name LIKE %" + splits[i] + "%))";
+			}
+			sqlCondition += tmpStr + " ";
+		}
+		System.out.println(sqlCondition);
+		return userRepository.search(sqlCondition);
 	}
 
 }

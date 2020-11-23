@@ -1,13 +1,18 @@
 package com.zillennium.secretary.user.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="users")
@@ -23,16 +28,31 @@ public class User {
 	private String remember_token;
 	private String created_at;
 	private String updated_at;
-	private long role;
 	private String position;
 	private String phone_number;
 	private String date_of_birth;
-	private enum gender{MALE, FEMALE};
+	private String gender;
 	private byte status;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name="role_id", referencedColumnName="id")
+	private UserRole role;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reference", referencedColumnName = "id")
+	@JsonBackReference
 	private User reference;
+	
+	@OneToMany(mappedBy="reference")
+	private List<User> children;
+	
+	@OneToMany(mappedBy="user")
+	private List<UserContact> contacts;
+	
+	@ManyToOne
+	@JoinColumn(name="organization_id", referencedColumnName="id")
+	@JsonBackReference
+	private Organization organization;
 
 	public User() {
 		super();
@@ -40,8 +60,9 @@ public class User {
 	}
 
 	public User(long id, String name, String email, String email_verified_at, String password, String remember_token,
-			String created_at, String updated_at, long role, String position, String phone_number, String date_of_birth,
-			byte status, User reference) {
+			String created_at, String updated_at, String position, String phone_number, String date_of_birth,
+			String gender, byte status, UserRole role, User reference, List<User> children,
+			List<UserContact> contacts) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,12 +72,25 @@ public class User {
 		this.remember_token = remember_token;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
-		this.role = role;
 		this.position = position;
 		this.phone_number = phone_number;
 		this.date_of_birth = date_of_birth;
+		this.gender = gender;
 		this.status = status;
+		this.role = role;
 		this.reference = reference;
+		this.children = children;
+		this.contacts = contacts;
+	}
+
+	
+	
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public long getId() {
@@ -123,14 +157,6 @@ public class User {
 		this.updated_at = updated_at;
 	}
 
-	public long getRole() {
-		return role;
-	}
-
-	public void setRole(long role) {
-		this.role = role;
-	}
-
 	public String getPosition() {
 		return position;
 	}
@@ -155,6 +181,14 @@ public class User {
 		this.date_of_birth = date_of_birth;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public byte getStatus() {
 		return status;
 	}
@@ -163,12 +197,36 @@ public class User {
 		this.status = status;
 	}
 
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
 	public User getReference() {
 		return reference;
 	}
 
 	public void setReference(User reference) {
 		this.reference = reference;
+	}
+
+	public List<User> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<User> children) {
+		this.children = children;
+	}
+
+	public List<UserContact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<UserContact> contacts) {
+		this.contacts = contacts;
 	}
 	
 }

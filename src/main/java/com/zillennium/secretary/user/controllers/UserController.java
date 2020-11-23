@@ -51,7 +51,6 @@ public class UserController {
 	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam(value="search", required=false, defaultValue="") String search){
-		System.out.println(search);
 		return new ResponseEntity<>(userService.search(search), HttpStatus.OK);
 	}
 	
