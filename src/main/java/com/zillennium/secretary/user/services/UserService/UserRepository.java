@@ -1,4 +1,4 @@
-package com.zillennium.secretary.user.services;
+package com.zillennium.secretary.user.services.UserService;
 
 import java.util.List;
 

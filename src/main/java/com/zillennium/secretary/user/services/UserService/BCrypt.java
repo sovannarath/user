@@ -1,4 +1,4 @@
-package com.zillennium.secretary.user.services;
+package com.zillennium.secretary.user.services.UserService;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

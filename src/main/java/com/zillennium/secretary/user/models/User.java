@@ -2,7 +2,6 @@ package com.zillennium.secretary.user.models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="users")
@@ -38,9 +38,8 @@ public class User {
 	@JoinColumn(name="role_id", referencedColumnName="id")
 	private UserRole role;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
     @JoinColumn(name = "reference", referencedColumnName = "id")
-	@JsonBackReference
 	private User reference;
 	
 	@OneToMany(mappedBy="reference")
@@ -51,7 +50,6 @@ public class User {
 	
 	@ManyToOne
 	@JoinColumn(name="organization_id", referencedColumnName="id")
-	@JsonBackReference
 	private Organization organization;
 
 	public User() {

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zillennium.secretary.user.models.User;
-import com.zillennium.secretary.user.services.UserService;
+import com.zillennium.secretary.user.services.UserService.UserService;
 
 @Controller
 public class UserController {
@@ -41,6 +41,8 @@ public class UserController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable("id") long id){
+		System.out.println("ID: " + id);
+		System.out.println("Conrtroller: " + user.getRole());
 		return new ResponseEntity<>(userService.update(user, id), HttpStatus.OK);
 	}
 	

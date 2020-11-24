@@ -1,4 +1,4 @@
-package com.zillennium.secretary.user.services;
+package com.zillennium.secretary.user.services.UserService;
 
 import java.util.List;
 
@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zillennium.secretary.user.models.User;
+import com.zillennium.secretary.user.services.RoleService.RoleRepository;
 
 @Service
 public class UserService implements UserServiceInterface{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Override
 	public List<User> all() {
@@ -28,19 +32,22 @@ public class UserService implements UserServiceInterface{
 	@Override
 	public User create(User user) {
 		// TODO Auto-generated method stub
+		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
 		return userRepository.save(user);
 	}
 
 	@Override
 	public User update(User user, long id) {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println(user.getRole().getId());
+		user.setId(id);
+		return userRepository.save(user);
+		//return null;
 	}
 
 	@Override
 	public Boolean delete(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		userRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
