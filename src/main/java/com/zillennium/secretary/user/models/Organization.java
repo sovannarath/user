@@ -14,17 +14,17 @@ import javax.persistence.Table;
 public class Organization {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String description;
 	private String address;
 	private String telephone;
 	private String email;
-	private byte isActive;
-	private String createdAt;
-	private String updatedAt;
-	private String deletedAt;
+	private byte is_active;
+	private String created_at;
+	private String updated_at;
+	private String deleted_at;
 	
 	@OneToMany(mappedBy="organization")
 	private List<User> users;
@@ -35,7 +35,7 @@ public class Organization {
 	}
 
 	public Organization(long id, String name, String description, String address, String telephone, String email,
-			byte isActive, String createdAt, String updatedAt, String deletedAt, List<User> users) {
+			byte is_active, String created_at, String updated_at, String deleted_at, List<User> users) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -43,10 +43,10 @@ public class Organization {
 		this.address = address;
 		this.telephone = telephone;
 		this.email = email;
-		this.isActive = isActive;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.deletedAt = deletedAt;
+		this.is_active = is_active;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+		this.deleted_at = deleted_at;
 		this.users = users;
 	}
 
@@ -98,36 +98,36 @@ public class Organization {
 		this.email = email;
 	}
 
-	public byte getIsActive() {
-		return isActive;
+	public byte getIs_active() {
+		return is_active;
 	}
 
-	public void setIsActive(byte isActive) {
-		this.isActive = isActive;
+	public void setIs_active(byte is_active) {
+		this.is_active = is_active;
 	}
 
-	public String getCreatedAt() {
-		return createdAt;
+	public String getCreated_at() {
+		return created_at;
 	}
 
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
+	public void setCreated_at(String created_at) {
+		this.created_at = created_at;
 	}
 
-	public String getUpdatedAt() {
-		return updatedAt;
+	public String getUpdated_at() {
+		return updated_at;
 	}
 
-	public void setUpdatedAt(String updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setUpdated_at(String updated_at) {
+		this.updated_at = updated_at;
 	}
 
-	public String getDeletedAt() {
-		return deletedAt;
+	public String getDeleted_at() {
+		return deleted_at;
 	}
 
-	public void setDeletedAt(String deletedAt) {
-		this.deletedAt = deletedAt;
+	public void setDeleted_at(String deleted_at) {
+		this.deleted_at = deleted_at;
 	}
 
 	public List<User> getUsers() {
