@@ -1,16 +1,27 @@
 package com.zillennium.secretary.user.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="organization")
+//@JsonIgnoreProperties({"hibernatelazyInitializer", "handler", "users"})
 public class Organization {
 	
 	@Id
@@ -22,10 +33,18 @@ public class Organization {
 	private String telephone;
 	private String email;
 	private byte is_active;
-	private String created_at;
-	private String updated_at;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created_at;
+	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated_at;
+	
 	private String deleted_at;
 	
+	//@JsonBackReference
 	@OneToMany(mappedBy="organization")
 	private List<User> users;
 
@@ -35,7 +54,7 @@ public class Organization {
 	}
 
 	public Organization(long id, String name, String description, String address, String telephone, String email,
-			byte is_active, String created_at, String updated_at, String deleted_at, List<User> users) {
+			byte is_active, Date created_at, Date updated_at, String deleted_at, List<User> users) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -106,19 +125,19 @@ public class Organization {
 		this.is_active = is_active;
 	}
 
-	public String getCreated_at() {
+	public Date getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(String created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 
-	public String getUpdated_at() {
+	public Date getUpdated_at() {
 		return updated_at;
 	}
 
-	public void setUpdated_at(String updated_at) {
+	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
 
@@ -137,5 +156,5 @@ public class Organization {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
+
 }

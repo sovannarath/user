@@ -6,16 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zillennium.secretary.user.models.User;
-import com.zillennium.secretary.user.services.RoleService.RoleRepository;
 
 @Service
 public class UserService implements UserServiceInterface{
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private RoleRepository roleRepository;
 
 	@Override
 	public List<User> all() {
@@ -52,19 +48,19 @@ public class UserService implements UserServiceInterface{
 
 	@Override
 	public List<User> search(String str){
-		String splits[] = str.split(" ");
+		/*String splits[] = str.split(" ");
 		String sqlCondition = "";
 		for(int i=0; i < splits.length; i++) {
 			String tmpStr = "";
 			if(i == 0) {
-				tmpStr = "name LIKE %" + splits[i] + "%";
+				tmpStr = " name LIKE %" + splits[i] + "%";
 			}else {
-				tmpStr = "AND (SELECT 1 FROM user_contact WHERE users.id = user_contact.user_id AND (SELECT 1 FROM contact_provider WHERE user_contact.provider_id = contact_provider.id AND contact_provider.name LIKE %" + splits[i] + "%))";
+				tmpStr = " AND (SELECT 1 FROM user_contact WHERE users.id = user_contact.user_id AND (SELECT 1 FROM contact_provider WHERE user_contact.provider_id = contact_provider.id AND contact_provider.name LIKE %" + splits[i] + "%))";
 			}
 			sqlCondition += tmpStr + " ";
 		}
-		System.out.println(sqlCondition);
-		return userRepository.search(sqlCondition);
+		System.out.println(sqlCondition);*/
+		return userRepository.search(str);
 	}
 
 }

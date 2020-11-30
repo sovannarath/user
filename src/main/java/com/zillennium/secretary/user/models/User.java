@@ -1,5 +1,6 @@
 package com.zillennium.secretary.user.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,12 +11,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="users")
+//@JsonIgnoreProperties({"hibernatelazyInitializer", "handler", "contacts", "reference", "children"})
 public class User {
 	
 	@Id
@@ -26,30 +34,42 @@ public class User {
 	private String email_verified_at;
 	private String password;
 	private String remember_token;
-	private String created_at;
-	private String updated_at;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created_at;
+	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated_at;
+	
 	private String position;
 	private String phone_number;
 	private String date_of_birth;
 	private String gender;
 	private byte status;
 	
+	//@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name="role_id", referencedColumnName="id")
+	@JoinColumn(name="role_id")
 	private UserRole role;
 	
+	//@JsonManagedReference
 	@ManyToOne
-    @JoinColumn(name = "reference", referencedColumnName = "id")
+    @JoinColumn(name = "reference")
 	private User reference;
 	
+	//@JsonBackReference(value="reference")
 	@OneToMany(mappedBy="reference")
 	private List<User> children;
 	
+	//@JsonBackReference(value="user")
 	@OneToMany(mappedBy="user")
 	private List<UserContact> contacts;
 	
+	//@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name="organization_id", referencedColumnName="id")
+	@JoinColumn(name="organization_id")
 	private Organization organization;
 
 	public User() {
@@ -58,9 +78,9 @@ public class User {
 	}
 
 	public User(long id, String name, String email, String email_verified_at, String password, String remember_token,
-			String created_at, String updated_at, String position, String phone_number, String date_of_birth,
-			String gender, byte status, UserRole role, User reference, List<User> children,
-			List<UserContact> contacts) {
+			Date created_at, Date updated_at, String position, String phone_number, String date_of_birth, String gender,
+			byte status, UserRole role, User reference, List<User> children, List<UserContact> contacts,
+			Organization organization) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -79,15 +99,6 @@ public class User {
 		this.reference = reference;
 		this.children = children;
 		this.contacts = contacts;
-	}
-
-	
-	
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
 
@@ -139,19 +150,19 @@ public class User {
 		this.remember_token = remember_token;
 	}
 
-	public String getCreated_at() {
+	public Date getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(String created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 
-	public String getUpdated_at() {
+	public Date getUpdated_at() {
 		return updated_at;
 	}
 
-	public void setUpdated_at(String updated_at) {
+	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
 
@@ -225,6 +236,14 @@ public class User {
 
 	public void setContacts(List<UserContact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 	
 }
