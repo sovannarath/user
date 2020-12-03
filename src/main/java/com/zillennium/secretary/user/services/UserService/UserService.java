@@ -15,29 +15,24 @@ public class UserService implements UserServiceInterface{
 
 	@Override
 	public List<User> all() {
-		// TODO Auto-generated method stub
 		return (List<User>) userRepository.findAll();
 	}
 
 	@Override
 	public Object getUser(long id) {
-		// TODO Auto-generated method stub
 		return userRepository.findById(id);
 	}
 
 	@Override
 	public User create(User user) {
-		// TODO Auto-generated method stub
 		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
 		return userRepository.save(user);
 	}
 
 	@Override
 	public User update(User user, long id) {
-		//System.out.println(user.getRole().getId());
 		user.setId(id);
 		return userRepository.save(user);
-		//return null;
 	}
 
 	@Override

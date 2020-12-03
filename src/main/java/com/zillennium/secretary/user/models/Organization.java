@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,12 +15,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
 @Table(name="organization")
-//@JsonIgnoreProperties({"hibernatelazyInitializer", "handler", "users"})
 public class Organization {
 	
 	@Id
@@ -44,13 +39,11 @@ public class Organization {
 	
 	private String deleted_at;
 	
-	//@JsonBackReference
 	@OneToMany(mappedBy="organization")
 	private List<User> users;
 
 	public Organization() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Organization(long id, String name, String description, String address, String telephone, String email,

@@ -3,7 +3,6 @@ package com.zillennium.secretary.user.models;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +14,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="user_contact")
@@ -57,7 +52,6 @@ public class UserContact {
 
 	public UserContact() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public UserContact(long id, User user, ContactType type, ContactProvider provider, String contact, byte is_active,

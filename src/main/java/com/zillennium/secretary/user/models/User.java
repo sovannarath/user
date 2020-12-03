@@ -17,13 +17,10 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="users")
-//@JsonIgnoreProperties({"hibernatelazyInitializer", "handler", "contacts", "reference", "children"})
 public class User {
 	
 	@Id
@@ -49,32 +46,29 @@ public class User {
 	private String gender;
 	private byte status;
 	
-	//@JsonManagedReference
+	@JsonIgnoreProperties("users") 
 	@ManyToOne
 	@JoinColumn(name="role_id")
 	private UserRole role;
 	
-	//@JsonManagedReference
+	@JsonIgnoreProperties({"reference", "children", "contacts"}) 
 	@ManyToOne
     @JoinColumn(name = "reference")
 	private User reference;
 	
-	//@JsonBackReference(value="reference")
 	@OneToMany(mappedBy="reference")
 	private List<User> children;
 	
-	//@JsonBackReference(value="user")
 	@OneToMany(mappedBy="user")
 	private List<UserContact> contacts;
 	
-	//@JsonManagedReference
+	@JsonIgnoreProperties("users")
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;
 
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(long id, String name, String email, String email_verified_at, String password, String remember_token,
