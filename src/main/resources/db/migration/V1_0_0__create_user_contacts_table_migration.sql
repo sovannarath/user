@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXIST `user_contacts` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`user_id` BIGINT,
+	`type_id` BIGINT,
+	`contact` TEXT,
+	`provider_id` BIGINT,
+	`is_active` TINYINT DEFAULT 1,
+	`is_default` TINYINT DEFAULT 0,
+	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`deleted_at` TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT UTF8;
+
