@@ -14,21 +14,30 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.zillennium.secretary.user.models.Organization;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
-@Table(name="projects")
-public class Project {
-	
+@Table(name="meeting_actions")
+public class MeetingAction {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	private String name;
-	private String purpose;
+	
+	@ManyToOne
+	@JoinColumn(name="meeting_id")
+	private Meeting meeting;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="action_id")
+	private MeetingActionType action_type;
+	
 	private String description;
-	private Date start_date;
-	private Date end_date;
+	private String note;
 	private byte is_active;
 	
 	@CreationTimestamp
@@ -42,35 +51,25 @@ public class Project {
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
-	
-	@ManyToOne
-	@JoinColumn(name="organization_id")
-	private Organization organization;
-	
-	@ManyToOne
-	@JoinColumn(name="manager_id")
-	private User manager;
 
-	public Project() {
+	public MeetingAction() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Project(long id, String name, String purpose, String description, Date start_date, Date end_date,
-			byte is_active, Date created_at, Date updated_at, Date deleted_at, Organization organization,
-			User manager) {
+	public MeetingAction(long id, Meeting meeting, User user, MeetingActionType action_type, String description,
+			String note, byte is_active, Date created_at, Date updated_at, Date deleted_at) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.purpose = purpose;
+		this.meeting = meeting;
+		this.user = user;
+		this.action_type = action_type;
 		this.description = description;
-		this.start_date = start_date;
-		this.end_date = end_date;
+		this.note = note;
 		this.is_active = is_active;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
-		this.organization = organization;
-		this.manager = manager;
 	}
 
 	public long getId() {
@@ -81,20 +80,28 @@ public class Project {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Meeting getMeeting() {
+		return meeting;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
 	}
 
-	public String getPurpose() {
-		return purpose;
+	public User getUser() {
+		return user;
 	}
 
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public MeetingActionType getAction_type() {
+		return action_type;
+	}
+
+	public void setAction_type(MeetingActionType action_type) {
+		this.action_type = action_type;
 	}
 
 	public String getDescription() {
@@ -105,20 +112,12 @@ public class Project {
 		this.description = description;
 	}
 
-	public Date getStart_date() {
-		return start_date;
+	public String getNote() {
+		return note;
 	}
 
-	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
-	}
-
-	public Date getEnd_date() {
-		return end_date;
-	}
-
-	public void setEnd_date(Date end_date) {
-		this.end_date = end_date;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public byte getIs_active() {
@@ -151,22 +150,6 @@ public class Project {
 
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
-	}
-
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
-	public User getManager() {
-		return manager;
-	}
-
-	public void setManager(User manager) {
-		this.manager = manager;
 	}
 	
 }

@@ -6,22 +6,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.zillennium.secretary.user.models.User;
+
 @Entity
-@Table(name="meeting_type")
-public class MeetingType {
+@Table(name="user_involved_meeting")
+public class MeetingParticipant {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	private String name;
-	private String description;
-	private byte is_active;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="meeting_id")
+	private Meeting meeting;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,17 +44,16 @@ public class MeetingType {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 
-	public MeetingType() {
+	public MeetingParticipant() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public MeetingType(long id, String name, String description, byte is_active, Date created_at, Date updated_at,
-			Date deleted_at) {
+	public MeetingParticipant(long id, User user, Meeting meeting, Date created_at, Date updated_at, Date deleted_at) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.is_active = is_active;
+		this.user = user;
+		this.meeting = meeting;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
@@ -59,28 +67,20 @@ public class MeetingType {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public User getUser() {
+		return user;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public String getDescription() {
-		return description;
+	public Meeting getMeeting() {
+		return meeting;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public byte getIs_active() {
-		return is_active;
-	}
-
-	public void setIs_active(byte is_active) {
-		this.is_active = is_active;
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
 	}
 
 	public Date getCreated_at() {
