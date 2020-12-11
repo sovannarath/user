@@ -18,6 +18,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.zillennium.secretary.user.models.MeetingModels.Meeting;
+import com.zillennium.secretary.user.models.MeetingModels.MeetingAction;
+import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
+import com.zillennium.secretary.user.models.MeetingModels.Project;
 
 @Entity
 @Table(name="users")
@@ -66,6 +70,21 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;
+	
+	@OneToMany(mappedBy="checker")
+	private List<Meeting> meetings;
+	
+	@OneToMany(mappedBy="recorder")
+	private List<Meeting> meeting_records;
+	
+	@OneToMany(mappedBy="user")
+	private List<MeetingAction> meeting_actions;
+	
+	@OneToMany(mappedBy="user")
+	private List<MeetingParticipant> meeting_participateds;
+	
+	@OneToMany(mappedBy="manager")
+	private List<Project> projects;
 
 	public User() {
 		super();

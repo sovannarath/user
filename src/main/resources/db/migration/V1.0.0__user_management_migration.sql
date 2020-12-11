@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXIST `user_roles` (
+CREATE TABLE IF NOT EXISTS `user_roles` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`description` TEXT NULL, 
@@ -15,10 +15,10 @@ VALUES
 ('ADMINISTRATOR', 'Administration of the system.'),
 ('DATA_ENTRY', 'Entry data to any system as requirement.'),
 ('MEETING_RECORDER', 'Join and record meeting process.'),
-('PROGRAMMER', 'Develop internal system.')
+('PROGRAMMER', 'Develop internal system.'),
 ('GUEST', 'For who that doesn\'t has any position');
 
-CREATE TABLE IF NOT EXIST `organizations` (
+CREATE TABLE IF NOT EXISTS `organizations` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`description` TEXT NULL,
@@ -29,17 +29,17 @@ CREATE TABLE IF NOT EXIST `organizations` (
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL  
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 INSERT INTO `organizations` (`name`, `description`, `address`, `telephone`, `email`)
 VALUES
 ('Zillennium', 'Real estate market place.', 'St 310, Boeung Kak II, Khan Toul Kok, Phnom Penh, Cambodia', '+855230000000', 'info@zillennium.com'),
 ('Century 21 Zillion Home', 'International real estate market place.', 'St 310, Beoung Kak II, Toul Kok, Phnom Penh, Cambodia', '+85523000000', 'info@zillionhome.com');
 
-CREATE TABLE IF NOT EXIST `users` (
+CREATE TABLE IF NOT EXISTS `users` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
-	`gender` ENUM('Male', 'Female'),
+	`gender` ENUM('MALE', 'FEMALE'),
 	`date_of_birth` DATE NULL, 
 	`email` VARCHAR(255) NULL,
 	`password` TEXT, 
@@ -52,31 +52,30 @@ CREATE TABLE IF NOT EXIST `users` (
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-ALTER TABLE `users` ADD CONSTRAINT users_role_id_foreign FOREIGN KEY (`role_id`) REFERENCES `users_role`(`id`);
+ALTER TABLE `users` ADD CONSTRAINT users_role_id_foreign FOREIGN KEY (`role_id`) REFERENCES `user_roles`(`id`);
 ALTER TABLE `users` ADD CONSTRAINT users_organization_id_foreign FOREIGN KEY (`organization_id`) REFERENCES `organizations`(`id`);
 ALTER TABLE `users` ADD CONSTRAINT users_reference_foreign FOREIGN KEY (`reference`) REFERENCES `organizations`(`id`);
 
-CREATE TABLE IF NOT EXIST `project_types` (
+CREATE TABLE IF NOT EXISTS `contact_types` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
-	`description` TEXT NULL, 
+	`description` TEXT NULL,
 	`is_active` TINYINT DEFAULT 1,
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8; 
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO `project_type` ('name', 'description')
+INSERT INTO `contact_types` (`name`, `description`)
 VALUES
-('SOFTWARE_PROJECT', 'Project that build software.'),
-('CONSTRUCTION_PROJECT', 'Project for civil engineer contruction.'),
-('RESEARCH_PROJECT', 'Research project'),
-('DATA_COLLECTION_PROJECT', 'Data collection project');
+('EMAIL', 'Email type of contact'),
+('PHONE_NUMBER', 'Phne number type of contact'),
+('ADDRESS', 'Address type of contact'),
+('SOCIAL_MEDIA', 'Social media type of contact');
 
-
-CREATE TABLE IF NOT EXIST `contact_providers` (
+CREATE TABLE IF NOT EXISTS `contact_providers` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255), 
 	`description` TEXT NULL,
@@ -96,7 +95,7 @@ VALUES
 ('METFONE', 'Metfone mobile service provider'),
 ('SEATEL', 'Sea-Tel mobile service provider');
 
-CREATE TABLE IF NOT EXIST `user_contacts` (
+CREATE TABLE IF NOT EXISTS `user_contacts` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`user_id` BIGINT,
 	`type_id` BIGINT,
@@ -107,17 +106,35 @@ CREATE TABLE IF NOT EXIST `user_contacts` (
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 ALTER TABLE `user_contacts` ADD CONSTRAINT user_contacts_user_id_foreign FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 ALTER TABLE `user_contacts` ADD CONSTRAINT user_contacts_type_id_foreign FOREIGN KEY (`type_id`) REFERENCES `contact_types`(`id`);
 ALTER TABLE `user_contacts` ADD CONSTRAINT user_contacts_provider_id_foreign FOREIGN KEY (`provider_id`) REFERENCES `contact_providers`(`id`);
+
+CREATE TABLE IF NOT EXISTS `project_types` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(255),
+	`description` TEXT NULL, 
+	`is_active` TINYINT DEFAULT 1,
+	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`deleted_at` TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8; 
+
+INSERT INTO `project_types` (`name`, `description`) 
+VALUES 
+('SOFTWARE_PROJECT', 'Project that build software.'),
+('CONSTRUCTION_PROJECT', 'Project for civil engineer contruction.'),
+('RESEARCH_PROJECT', 'Research project'),
+('DATA_COLLECTION_PROJECT', 'Data collection project');
 
 CREATE TABLE IF NOT EXISTS `projects`(
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255), 
 	`purpose` TEXT NULL,
 	`descriptions` TEXT NULL,
+	`project_type` BIGINT,
 	`organization_id` BIGINT,
 	`manager_id` BIGINT NULL,
 	`start_date` DATE NULL,
@@ -128,10 +145,11 @@ CREATE TABLE IF NOT EXISTS `projects`(
 	`deleted_at` TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-ALTER TABLE `projects` ADD CONSTRAINT projects_organization_id_foreign FOREIGN KEY `organization_id` REFERENCES `organizations`(`id`);
-ALTER TABLE `projects` ADD CONSTRAINT projects_manager_id_foreign FOREING KEY `manager_id` REFERENCES `users`(`id`);
+ALTER TABLE `projects` ADD CONSTRAINT projects_project_type_foreign FOREIGN KEY (`project_type`) REFERENCES `project_types`(`id`);
+ALTER TABLE `projects` ADD CONSTRAINT projects_organization_id_foreign FOREIGN KEY (`organization_id`) REFERENCES `organizations`(`id`);
+ALTER TABLE `projects` ADD CONSTRAINT projects_manager_id_foreign FOREIGN KEY (`manager_id`) REFERENCES `users`(`id`);
 
-CREATE TABLE IF NOT EXIST `meeting_types` (
+CREATE TABLE IF NOT EXISTS `meeting_types` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`description` TEXT NULL,
@@ -139,16 +157,16 @@ CREATE TABLE IF NOT EXIST `meeting_types` (
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO `meeting_types` ('name', 'description')
+INSERT INTO `meeting_types` (`name`, `description`)
 VALUES
 ('DAILY_MEETING', 'Daily meeting'),
 ('WEEKLY_MEETING', 'Weekly meeting'),
 ('MONTHLY_MEETING', 'Monthly meeting'),
 ('MINUTE_MEETING', 'Minute Meeting');
 
-CREATE TABLE IF NOT EXIST `meetings` (
+CREATE TABLE IF NOT EXISTS `meetings` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`project_id` BIGINT,
@@ -170,34 +188,34 @@ CREATE TABLE IF NOT EXIST `meetings` (
 	`next_schedule_comment` VARCHAR(255) NULL,
 	`recorder_id` BIGINT,
 	`record_date` DATE NULL,
-	`checker_id` BIGINT​​ NULL,
+	`checker_id` BIGINT NULL,
 	`check_date` DATE NULL,
 	`is_active` TINYINT DEFAULT 1,
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_project_id_foreign FOREIGN KEY (`project_id`) REFERENCES `meetings`(`id`);
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_recorder_id_foreign FOREIGN KEY (`recorder_id`) REFERENCES `users`(`id`);
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_checker_id_foreign FOREIGN KEY (`checker_id`) REFERENCES `users`(`id`);
 
-CREATE TABLE IF NOT EXIST `meeting_action_types` (
+CREATE TABLE IF NOT EXISTS `meeting_action_types` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`description` TEXT NULL,
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO `meeting_action_types` ('name', 'description')
+INSERT INTO `meeting_action_types` (`name`, `description`)
 VALUES
 ('COMMENT', 'Give a comment in meeting.'),
 ('ASK_QUESTION', 'Ask a question in meeting.'),
 ('ANSWER_QUESTION', 'Answer a question in meeting.');
 
-CREATE TABLE IF NOT EXIST `meeting_actions` (
+CREATE TABLE IF NOT EXISTS `meeting_actions` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`meeting_id` BIGINT,
 	`user_id` BIGINT,
@@ -208,22 +226,22 @@ CREATE TABLE IF NOT EXIST `meeting_actions` (
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 ALTER TABLE `meeting_actions` ADD CONSTRAINT meeting_actions_meeting_id_foreign FOREIGN KEY (`meeting_id`) REFERENCES `meetings`(`id`); 
 ALTER TABLE `meeting_actions` ADD CONSTRAINT meeting_actions_user_id_foreign FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
 ALTER TABLE `meeting_actions` ADD CONSTRAINT meeting_actions_action_id_foreign FOREIGN KEY (`action_id`) REFERENCES `meeting_action_types`(`id`);
 
-CREATE TABLE IF NOT EXIST `meeting_participants` (
+CREATE TABLE IF NOT EXISTS `meeting_participants` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`user_id` BIGINT,
 	`meeting_id` BIGINT,
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 ALTER TABLE `meeting_participants` ADD CONSTRAINT meeting_participants_user_id_foreign FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);
-ALTER TABLE `meeting_participants` ADD CONSTRAINT meeting_actions_meeting_id_foreign FOREIGN KEY (`meeting_id`) REFERENCES `meetings`(`id`);
+ALTER TABLE `meeting_participants` ADD CONSTRAINT meeting_participants_meeting_id_foreign FOREIGN KEY (`meeting_id`) REFERENCES `meetings`(`id`);
 
 

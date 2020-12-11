@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.zillennium.secretary.user.models.MeetingModels.Project;
+
 @Entity
 @Table(name="organization")
 public class Organization {
@@ -41,6 +43,9 @@ public class Organization {
 	
 	@OneToMany(mappedBy="organization")
 	private List<User> users;
+	
+	@OneToMany(mappedBy="organization")
+	private List<Project> projects;
 
 	public Organization() {
 		super();

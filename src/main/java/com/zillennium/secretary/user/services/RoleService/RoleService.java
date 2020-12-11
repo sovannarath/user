@@ -1,12 +1,12 @@
 package com.zillennium.secretary.user.services.RoleService;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zillennium.secretary.user.models.UserRole;
+
 
 @Service
 public class RoleService implements RoleServiceInterface{

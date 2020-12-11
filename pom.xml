@@ -58,6 +58,13 @@
 			<plugin>
     			<groupId>org.flywaydb</groupId>
     			<artifactId>flyway-maven-plugin</artifactId>
+    			<configuration> 
+        			<url>jdbc:mysql://localhost:3306</url> 
+        			<schemas>user_management</schemas>
+        			<user>root</user> 
+        			<password>root</password>
+        			<!-->locations>classpath:db/migration</locations--> 
+    			</configuration>
 			</plugin>
 			
 		</plugins>

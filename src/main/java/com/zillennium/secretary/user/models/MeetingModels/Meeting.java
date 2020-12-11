@@ -2,6 +2,7 @@ package com.zillennium.secretary.user.models.MeetingModels;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,8 +53,12 @@ public class Meeting {
 	@ManyToOne
 	@JoinColumn(name="checker_id")
 	private User checker;
+	
 	private Date check_date;
 	private byte is_active;
+	
+	@OneToMany(mappedBy="meeting")
+	private List<MeetingAction> actions;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
