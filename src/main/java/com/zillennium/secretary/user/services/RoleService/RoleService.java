@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.zillennium.secretary.user.models.UserRole;
 
-
 @Service
 public class RoleService implements RoleServiceInterface{
 
