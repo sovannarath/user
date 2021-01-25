@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
@@ -24,10 +26,9 @@ import com.zillennium.secretary.user.models.User;
 public class Meeting {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	private Project project;
 	private int issue_number;
 	private Date date;
 	private Time start_time;
@@ -46,10 +47,17 @@ public class Meeting {
 	private String next_schedule_comment;
 	
 	@ManyToOne
+	@JoinColumn(name="project_id")
+	private Project project;
+	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
+	@ManyToOne
 	@JoinColumn(name="recorder_id")
 	private User recorder;
+	
 	private Date record_date;
 	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
 	@ManyToOne
 	@JoinColumn(name="checker_id")
 	private User checker;
@@ -59,6 +67,10 @@ public class Meeting {
 	
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAction> actions;
+	
+	@ManyToOne
+	@JoinColumn(name="meeting_type")
+	private MeetingType type;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -109,6 +121,22 @@ public class Meeting {
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
+	}
+
+	public List<MeetingAction> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<MeetingAction> actions) {
+		this.actions = actions;
+	}
+
+	public MeetingType getType() {
+		return type;
+	}
+
+	public void setType(MeetingType type) {
+		this.type = type;
 	}
 
 	public long getId() {

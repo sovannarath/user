@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="project_types")
 public class ProjectType {
@@ -26,6 +28,7 @@ public class ProjectType {
 	private String description;
 	private byte is_active;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="type")
 	private List<Project> projects;
 	

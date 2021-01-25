@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `projects`(
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255), 
 	`purpose` TEXT NULL,
-	`descriptions` TEXT NULL,
+	`description` TEXT NULL,
 	`project_type` BIGINT,
 	`organization_id` BIGINT,
 	`manager_id` BIGINT NULL,
@@ -170,6 +170,7 @@ CREATE TABLE IF NOT EXISTS `meetings` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255),
 	`project_id` BIGINT,
+	`meeting_type` BIGINT, 
 	`issue_number` INT NULL,
 	`date` DATE,
 	`start_time` TIME NULL,
@@ -199,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `meetings` (
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_project_id_foreign FOREIGN KEY (`project_id`) REFERENCES `meetings`(`id`);
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_recorder_id_foreign FOREIGN KEY (`recorder_id`) REFERENCES `users`(`id`);
 ALTER TABLE `meetings` ADD CONSTRAINT meetings_checker_id_foreign FOREIGN KEY (`checker_id`) REFERENCES `users`(`id`);
+ALTER TABLE `meetings` ADD CONSTRAINT meetings_meeting_type_foreign FOREIGN KEY (`meeting_type`) REFERENCE `meeting_types`(`id`);
 
 CREATE TABLE IF NOT EXISTS `meeting_action_types` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,

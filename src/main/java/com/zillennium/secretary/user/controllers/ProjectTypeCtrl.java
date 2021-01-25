@@ -14,45 +14,38 @@ import com.zillennium.secretary.user.models.MeetingModels.ProjectType;
 import com.zillennium.secretary.user.services.ProjectTypeService.ProjectTypeService;
 
 @RestController
-public class ProjectTypeCtrl implements ControllerInterface {
+public class ProjectTypeCtrl {
 	
 	@Autowired
 	private ProjectTypeService service;
 
 	@RequestMapping(value="/project-types", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/project-types", method=RequestMethod.POST)
-	@Override
-	public ResponseEntity<Object> create(@RequestBody Object object) {
-		return new ResponseEntity<>(service.create((ProjectType)object), HttpStatus.OK);
+	public ResponseEntity<Object> create(@RequestBody ProjectType projectType) {
+		return new ResponseEntity<>(service.create(projectType), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.PUT)
-	@Override
-	public ResponseEntity<Object> update(@RequestBody Object object, @PathVariable("id") long id) {
-		return new ResponseEntity<>(service.update((ProjectType) object, id), HttpStatus.OK);
+	public ResponseEntity<Object> update(@RequestBody ProjectType projectType, @PathVariable("id") long id) {
+		return new ResponseEntity<>(service.update(projectType, id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.DELETE)
-	@Override
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/project-type/search", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> search(@RequestParam String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}	
 	

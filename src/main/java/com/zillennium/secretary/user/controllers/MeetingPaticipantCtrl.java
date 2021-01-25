@@ -14,43 +14,37 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
 import com.zillennium.secretary.user.services.UserInvolvedMeetingService.MeetingParticipantService;
 
 @RestController
-public class MeetingPaticipantCtrl implements ControllerInterface {
+public class MeetingPaticipantCtrl {
 
 	@Autowired
 	private MeetingParticipantService service;
 	
 	@RequestMapping(value="/meeting-participants", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-participants", method=RequestMethod.POST)
-	@Override
-	public ResponseEntity<Object> create(@RequestBody Object object) {
-		return new ResponseEntity<>(service.create((MeetingParticipant) object), HttpStatus.OK);
+	public ResponseEntity<Object> create(@RequestBody MeetingParticipant meetingParticipant) {
+		return new ResponseEntity<>(service.create(meetingParticipant), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.PUT)
-	@Override
-	public ResponseEntity<Object> update(@RequestBody Object object, @PathVariable("id") long id) {
-		return new ResponseEntity<>(service.update((MeetingParticipant) object, id), HttpStatus.OK);
+	public ResponseEntity<Object> update(@RequestBody MeetingParticipant meetingParticipant, @PathVariable("id") long id) {
+		return new ResponseEntity<>(service.update(meetingParticipant, id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.DELETE)
-	@Override
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/meeting-participants/search", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> search(@RequestParam("search") String str) {
 		return null;
 	}

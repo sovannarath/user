@@ -31,10 +31,13 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	private String gender;
+	private String date_of_birth;
 	private String email;
-	private String email_verified_at;
 	private String password;
 	private String remember_token;
+	private String api_token;
+	
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,12 +46,6 @@ public class User {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
-	
-	private String position;
-	private String phone_number;
-	private String date_of_birth;
-	private String gender;
-	private byte status;
 	
 	@JsonIgnoreProperties("users") 
 	@ManyToOne
@@ -88,31 +85,35 @@ public class User {
 
 	public User() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public User(long id, String name, String email, String email_verified_at, String password, String remember_token,
-			Date created_at, Date updated_at, String position, String phone_number, String date_of_birth, String gender,
-			byte status, UserRole role, User reference, List<User> children, List<UserContact> contacts,
-			Organization organization) {
+	public User(long id, String name, String gender, String date_of_birth, String email, String password,
+			String remember_token, String api_token, Date created_at, Date updated_at, UserRole role, User reference,
+			List<User> children, List<UserContact> contacts, Organization organization, List<Meeting> meetings,
+			List<Meeting> meeting_records, List<MeetingAction> meeting_actions,
+			List<MeetingParticipant> meeting_participateds, List<Project> projects) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.gender = gender;
+		this.date_of_birth = date_of_birth;
 		this.email = email;
-		this.email_verified_at = email_verified_at;
 		this.password = password;
 		this.remember_token = remember_token;
+		this.api_token = api_token;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
-		this.position = position;
-		this.phone_number = phone_number;
-		this.date_of_birth = date_of_birth;
-		this.gender = gender;
-		this.status = status;
 		this.role = role;
 		this.reference = reference;
 		this.children = children;
 		this.contacts = contacts;
 		this.organization = organization;
+		this.meetings = meetings;
+		this.meeting_records = meeting_records;
+		this.meeting_actions = meeting_actions;
+		this.meeting_participateds = meeting_participateds;
+		this.projects = projects;
 	}
 
 	public long getId() {
@@ -131,20 +132,28 @@ public class User {
 		this.name = name;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getDate_of_birth() {
+		return date_of_birth;
+	}
+
+	public void setDate_of_birth(String date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getEmail_verified_at() {
-		return email_verified_at;
-	}
-
-	public void setEmail_verified_at(String email_verified_at) {
-		this.email_verified_at = email_verified_at;
 	}
 
 	public String getPassword() {
@@ -163,6 +172,14 @@ public class User {
 		this.remember_token = remember_token;
 	}
 
+	public String getApi_token() {
+		return api_token;
+	}
+
+	public void setApi_token(String api_token) {
+		this.api_token = api_token;
+	}
+
 	public Date getCreated_at() {
 		return created_at;
 	}
@@ -177,46 +194,6 @@ public class User {
 
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public String getPhone_number() {
-		return phone_number;
-	}
-
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
-	}
-
-	public String getDate_of_birth() {
-		return date_of_birth;
-	}
-
-	public void setDate_of_birth(String date_of_birth) {
-		this.date_of_birth = date_of_birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public byte getStatus() {
-		return status;
-	}
-
-	public void setStatus(byte status) {
-		this.status = status;
 	}
 
 	public UserRole getRole() {
@@ -258,5 +235,47 @@ public class User {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
+
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
+	}
+
+	public List<Meeting> getMeeting_records() {
+		return meeting_records;
+	}
+
+	public void setMeeting_records(List<Meeting> meeting_records) {
+		this.meeting_records = meeting_records;
+	}
+
+	public List<MeetingAction> getMeeting_actions() {
+		return meeting_actions;
+	}
+
+	public void setMeeting_actions(List<MeetingAction> meeting_actions) {
+		this.meeting_actions = meeting_actions;
+	}
+
+	public List<MeetingParticipant> getMeeting_participateds() {
+		return meeting_participateds;
+	}
+
+	public void setMeeting_participateds(List<MeetingParticipant> meeting_participateds) {
+		this.meeting_participateds = meeting_participateds;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+	
+	
 	
 }

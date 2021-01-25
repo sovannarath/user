@@ -15,15 +15,17 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="user_contact")
+@Table(name="user_contacts")
 public class UserContact {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	//@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
@@ -37,7 +39,7 @@ public class UserContact {
 	private ContactProvider provider;
 	
 	private String contact;
-	private byte is_active;
+	private byte is_active = 1;
 	private byte is_default;
 	
 	@CreationTimestamp

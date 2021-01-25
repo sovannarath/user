@@ -14,43 +14,37 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingType;
 import com.zillennium.secretary.user.services.MeetingTypeService.MeetingTypeService;
 
 @RestController
-public class MeetingTypeCtrl implements ControllerInterface {
+public class MeetingTypeCtrl {
 
 	@Autowired
 	private MeetingTypeService service;
 	
 	@RequestMapping(value="/meeting-types", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-types/{id}", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-types", method=RequestMethod.POST)
-	@Override
-	public ResponseEntity<Object> create(@RequestBody Object object) {
-		return new ResponseEntity<>(service.create((MeetingType) object), HttpStatus.OK);
+	public ResponseEntity<Object> create(@RequestBody MeetingType meetingType) {
+		return new ResponseEntity<>(service.create(meetingType), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-types/{id}", method=RequestMethod.PUT)
-	@Override
-	public ResponseEntity<Object> update(@RequestBody Object object, @PathVariable("id") long id) {
-		return new ResponseEntity<>(service.update((MeetingType) object, id), HttpStatus.OK);
+	public ResponseEntity<Object> update(@RequestBody MeetingType meetingType, @PathVariable("id") long id) {
+		return new ResponseEntity<>(service.update(meetingType, id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-types/{id}", method=RequestMethod.DELETE)
-	@Override
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-types/search", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> search(@RequestParam("search") String str) {
 		return null;
 	}

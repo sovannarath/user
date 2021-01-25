@@ -18,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.zillennium.secretary.user.models.MeetingModels.Project;
 
 @Entity
-@Table(name="organization")
+@Table(name="organizations")
 public class Organization {
 	
 	@Id

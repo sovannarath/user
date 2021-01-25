@@ -9,8 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="contact_type")
+@Table(name="contact_types")
 public class ContactType {
 	
 	@Id
@@ -23,6 +25,7 @@ public class ContactType {
 	private String updated_at;
 	private String deleted_at;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="type")
 	private List<UserContact> contacts;
 	
@@ -30,6 +33,7 @@ public class ContactType {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public ContactType(long id, String name, String description, byte is_active, String created_at, String updated_at,
 			String deleted_at) {
 		super();
@@ -45,6 +49,7 @@ public class ContactType {
 	public List<UserContact> getContacts() {
 		return contacts;
 	}
+	
 	public void setContacts(List<UserContact> contacts) {
 		this.contacts = contacts;
 	}

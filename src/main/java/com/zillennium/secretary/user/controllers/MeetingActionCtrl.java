@@ -14,43 +14,37 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingAction;
 import com.zillennium.secretary.user.services.MeetingActionService.MeetingActionService;
 
 @RestController
-public class MeetingActionCtrl implements ControllerInterface {
+public class MeetingActionCtrl {
 
 	@Autowired
 	private MeetingActionService service;
 
 	@RequestMapping(value="/meeting-actions", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-actions/{id}", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-actions", method=RequestMethod.POST)
-	@Override
-	public ResponseEntity<Object> create(@RequestBody Object object) {
-		return new ResponseEntity<>(service.create((MeetingAction) object), HttpStatus.OK);
+	public ResponseEntity<Object> create(@RequestBody MeetingAction meetingAction) {
+		return new ResponseEntity<>(service.create(meetingAction), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-actions/{id}", method=RequestMethod.PUT)
-	@Override
-	public ResponseEntity<Object> update(@RequestBody Object object, @PathVariable("id") long id) {
-		return new ResponseEntity<>(service.update((MeetingAction) object, id), HttpStatus.OK);
+	public ResponseEntity<Object> update(@RequestBody MeetingAction meetingAction, @PathVariable("id") long id) {
+		return new ResponseEntity<>(service.update(meetingAction, id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-actions", method=RequestMethod.DELETE)
-	@Override
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/meeting-actions/search", method=RequestMethod.GET)
-	@Override
 	public ResponseEntity<Object> search(@RequestParam("search") String str) {
 		return null;
 	}
