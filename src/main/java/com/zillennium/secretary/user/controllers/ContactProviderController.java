@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,31 +20,37 @@ public class ContactProviderController {
 	@Autowired
 	private ContactProviderService contactProviderService;
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers", method=RequestMethod.GET)
 	public ResponseEntity<Object> index(){
 		return new ResponseEntity<>(contactProviderService.all(), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(contactProviderService.get(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody ContactProvider provider) {
 		return new ResponseEntity<>(contactProviderService.create(provider), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody ContactProvider provider, @PathVariable("id") long id) {
 		return new ResponseEntity<>(contactProviderService.update(provider, id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(contactProviderService.delete(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/contact-providers/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam("search") String str) {
 		return new ResponseEntity<>(contactProviderService.search(str), HttpStatus.OK);

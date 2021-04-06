@@ -27,26 +27,31 @@ public class RoleController {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/roles/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id){
 		return new ResponseEntity<>(service.getRole(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/roles", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody UserRole role) {
 		return new ResponseEntity<>(service.create(role), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/roles/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody UserRole role, @PathVariable("id") long id) {
 		return new ResponseEntity<>(service.update(role, id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/roles/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/roles/search}", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam("search") String str){
 		return new ResponseEntity<>(service.search(str), HttpStatus.OK);

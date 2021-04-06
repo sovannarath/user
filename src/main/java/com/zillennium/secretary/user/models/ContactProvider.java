@@ -18,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class ContactProvider {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String description;

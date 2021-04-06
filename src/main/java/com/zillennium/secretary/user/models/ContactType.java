@@ -16,11 +16,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ContactType {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String description;
-	private byte is_active;
+	private byte is_active = 1;
 	private String created_at;
 	private String updated_at;
 	private String deleted_at;

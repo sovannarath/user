@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="user_contacts")
@@ -25,7 +26,7 @@ public class UserContact {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@JsonIgnore
+	@JsonIgnoreProperties({"reference", "children", "contacts"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

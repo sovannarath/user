@@ -3,6 +3,7 @@ package com.zillennium.secretary.user.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,31 +20,37 @@ public class ProjectTypeCtrl {
 	@Autowired
 	private ProjectTypeService service;
 
+	@CrossOrigin
 	@RequestMapping(value="/project-types", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/project-types", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody ProjectType projectType) {
 		return new ResponseEntity<>(service.create(projectType), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody ProjectType projectType, @PathVariable("id") long id) {
 		return new ResponseEntity<>(service.update(projectType, id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/project-types/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/project-type/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam String str) {
 		return null;

@@ -139,6 +139,14 @@ public class Organization {
 		this.updated_at = updated_at;
 	}
 
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
 	public String getDeleted_at() {
 		return deleted_at;
 	}

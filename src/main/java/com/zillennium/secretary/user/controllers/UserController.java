@@ -57,8 +57,10 @@ public class UserController {
 		return new ResponseEntity<>(userService.delete(id), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/search", method=RequestMethod.GET)
+	@CrossOrigin
+	@RequestMapping(value="/users/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam(value="search", required=false, defaultValue="") String search){
+		//System.out.println(search);
 		return new ResponseEntity<>(userService.search(search), HttpStatus.OK);
 	}
 	

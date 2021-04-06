@@ -14,7 +14,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.Organization;
 import com.zillennium.secretary.user.models.User;
@@ -53,7 +52,7 @@ public class Project {
 	@JoinColumn(name="manager_id")
 	private User manager;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="project_type")
 	private ProjectType type;

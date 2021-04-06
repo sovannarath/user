@@ -3,6 +3,7 @@ package com.zillennium.secretary.user.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,31 +20,37 @@ public class MeetingPaticipantCtrl {
 	@Autowired
 	private MeetingParticipantService service;
 	
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody MeetingParticipant meetingParticipant) {
 		return new ResponseEntity<>(service.create(meetingParticipant), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody MeetingParticipant meetingParticipant, @PathVariable("id") long id) {
 		return new ResponseEntity<>(service.update(meetingParticipant, id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participants/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@RequestParam("search") String str) {
 		return null;
