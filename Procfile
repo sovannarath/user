@@ -1,2 +1,2 @@
 release: ./mvnw flyway:migrate
-release: java -cp target/user-1.0.0.jar:target/dependency/* Migrations
+release: java -cp target/classes/:target/dependency/* Migrations
