@@ -14,15 +14,15 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="contact_provider")
+@Table(name="contact_providers")
 public class ContactProvider {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String description;
-	private String logo;
+	//private long logo_id;
 	private byte is_active;
 	
 	@CreationTimestamp
@@ -33,20 +33,22 @@ public class ContactProvider {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
 	
-	private String deleted_at;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date deleted_at;
 
 	public ContactProvider() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ContactProvider(long id, String name, String description, String logo, byte is_active, Date created_at,
-			Date updated_at, String deleted_at) {
+	public ContactProvider(long id, String name, String description, long logo_id, byte is_active, Date created_at,
+			Date updated_at/*, Date deleted_at*/) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.logo = logo;
+		//this.logo_id = logo_id;
 		this.is_active = is_active;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
@@ -77,13 +79,13 @@ public class ContactProvider {
 		this.description = description;
 	}
 
-	public String getLogo() {
-		return logo;
+	/*public long getLogoId() {
+		return logo_id;
 	}
 
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+	public void setLogoId(long logo_id) {
+		this.logo_id = logo_id;
+	}*/
 
 	public byte getIs_active() {
 		return is_active;
@@ -109,11 +111,11 @@ public class ContactProvider {
 		this.updated_at = updated_at;
 	}
 
-	public String getDeleted_at() {
+	public Date getDeleted_at() {
 		return deleted_at;
 	}
 
-	public void setDeleted_at(String deleted_at) {
+	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
 	

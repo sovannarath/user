@@ -14,18 +14,21 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="project_types")
 public class ProjectType {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
 	private String name;
 	private String description;
 	private byte is_active;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="type")
 	private List<Project> projects;
 	

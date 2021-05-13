@@ -18,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.zillennium.secretary.user.models.MeetingModels.Project;
 
 @Entity
-@Table(name="organization")
+@Table(name="organizations")
 public class Organization {
 	
 	@Id
@@ -137,6 +137,14 @@ public class Organization {
 
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	public String getDeleted_at() {

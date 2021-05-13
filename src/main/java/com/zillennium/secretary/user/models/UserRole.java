@@ -16,20 +16,27 @@ public class UserRole {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private String role;
+	private String name;
+	private String description;
 	
-	@OneToMany(mappedBy="role")
-	private List<User> users;
-	
-	public UserRole() {
-		super();
+	public String getName() {
+		return name;
 	}
 
-	public UserRole(long id, String role) {
-		super();
-		this.id = id;
-		this.role = role;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@OneToMany(mappedBy="role")
+	private List<User> users;
 
 	public long getId() {
 		return id;
@@ -39,14 +46,6 @@ public class UserRole {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public List<User> getUsers() {
 		return users;
 	}
@@ -54,5 +53,20 @@ public class UserRole {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+	public UserRole() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserRole(long id, String name, String description, List<User> users) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.users = users;
+	}
+	
+	
 	
 }

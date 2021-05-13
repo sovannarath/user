@@ -14,8 +14,8 @@ public class MeetingActionService implements MeetingActionServiceInterface {
 	private MeetingActionRepository repo;
 	
 	@Override
-	public List<MeetingAction> all() {
-		return (List<MeetingAction>) repo.findAll();
+	public List<MeetingAction> all(long meeting_id) {
+		return (List<MeetingAction>) repo.allMeetingActions(meeting_id);
 	}
 
 	@Override

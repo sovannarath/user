@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
@@ -23,13 +24,15 @@ import com.zillennium.secretary.user.models.User;
 public class MeetingAction {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@JsonIgnoreProperties({"project", "manager", "recorder", "checker", "actions"})
 	@ManyToOne
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
@@ -53,8 +56,6 @@ public class MeetingAction {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
 	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 
 	public MeetingAction() {

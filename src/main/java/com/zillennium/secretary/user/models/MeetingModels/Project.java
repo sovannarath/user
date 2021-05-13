@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.Organization;
 import com.zillennium.secretary.user.models.User;
 
@@ -22,14 +23,14 @@ import com.zillennium.secretary.user.models.User;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String purpose;
 	private String description;
 	private Date start_date;
 	private Date end_date;
-	private byte is_active;
+	private byte is_active = 1;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -39,18 +40,19 @@ public class Project {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
 	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 	
+	@JsonIgnoreProperties({"users", "projects"})
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;
 	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"}) 
 	@ManyToOne
 	@JoinColumn(name="manager_id")
 	private User manager;
 	
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="project_type")
 	private ProjectType type;
@@ -75,6 +77,14 @@ public class Project {
 		this.deleted_at = deleted_at;
 		this.organization = organization;
 		this.manager = manager;
+	}
+
+	public ProjectType getType() {
+		return type;
+	}
+
+	public void setType(ProjectType type) {
+		this.type = type;
 	}
 
 	public long getId() {

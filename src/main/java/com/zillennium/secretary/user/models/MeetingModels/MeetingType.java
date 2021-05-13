@@ -14,8 +14,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="meeting_type")
+@Table(name="meeting_types")
 public class MeetingType {
 
 	@Id
@@ -25,7 +27,8 @@ public class MeetingType {
 	private String description;
 	private byte is_active;
 	
-	@OneToMany(mappedBy="meeting")
+	@JsonIgnore
+	@OneToMany(mappedBy="type")
 	private List<Meeting> meetings;
 	
 	@CreationTimestamp
@@ -42,6 +45,14 @@ public class MeetingType {
 
 	public MeetingType() {
 		super();
+	}
+
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public MeetingType(long id, String name, String description, byte is_active, Date created_at, Date updated_at,

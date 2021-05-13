@@ -14,20 +14,23 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
-@Table(name="user_involved_meeting")
+@Table(name="meeting_participants")
 public class MeetingParticipant {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	
+	@JsonIgnoreProperties({"recorder", "manager", "project", "overview", "problem", "opportunity", "objective", "discussion", "comment", "conclusion"})
 	@ManyToOne
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
