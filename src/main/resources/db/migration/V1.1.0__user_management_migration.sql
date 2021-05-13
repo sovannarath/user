@@ -4,10 +4,9 @@
 CREATE TABLE IF NOT EXISTS `project_tasks` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
-	`project_id` BIGINT NOT NULL,
+	`project_id` BIGINT,
 	`description` TEXT NULL,
 	`comment` TEXT NULL,
-	`sprint_round` INT NULL,
 	`start_date` DATE NULL,
 	`end_date` DATE NULL,
 	`user_ids` TEXT NULL,
@@ -22,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `project_tasks` (
 	`deleted_at` TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 ALTER TABLE `project_tasks` ADD CONSTRAINT project_tasks_parent_id_foreign FOREIGN KEY (`parent_id`) REFERENCES `project_tasks`(`id`);
-ALTER TABLE `projects` ADD CONSTRAINT project_tasks_project_id_foreign FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`);
+ALTER TABLE `project_tasks` ADD CONSTRAINT project_tasks_project_id_foreign FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`);
 
 
 /* Meeting Project Task Logs Table */
