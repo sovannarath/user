@@ -92,7 +92,7 @@
           <artifactItem>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>3.2.1</version>
+            <version>6.5.7</version>
             <destFileName>flyway.jar</destFileName>
           </artifactItem>
           <artifactItem>
