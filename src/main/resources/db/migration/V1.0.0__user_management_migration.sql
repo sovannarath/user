@@ -16,7 +16,7 @@ VALUES
 ('DATA_ENTRY', 'Entry data to any system as requirement.'),
 ('MEETING_RECORDER', 'Join and record meeting process.'),
 ('PROGRAMMER', 'Develop internal system.'),
-('GUEST', 'For who that doesn\'t has any position');
+('GUEST', 'For who that does not has any position');
 
 CREATE TABLE IF NOT EXISTS organizations (
 	id BIGSERIAL PRIMARY KEY,
