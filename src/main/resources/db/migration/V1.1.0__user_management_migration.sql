@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS project_tasks (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 ALTER TABLE project_tasks ADD CONSTRAINT project_tasks_parent_id_foreign FOREIGN KEY (parent_id) REFERENCES project_tasks(id);
 ALTER TABLE project_tasks ADD CONSTRAINT project_tasks_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS meeting_task_logs (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 ALTER TABLE meeting_task_logs ADD CONSTRAINT meeting_task_logs_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
 ALTER TABLE meeting_task_logs ADD CONSTRAINT meeting_task_logs_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
 ALTER TABLE meeting_task_logs ADD CONSTRAINT meeting_task_logs_task_id_foreign FOREIGN KEY (task_id) REFERENCES project_tasks(id);

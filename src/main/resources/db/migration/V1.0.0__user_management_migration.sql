@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO user_roles (name, description)
 VALUES
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS organizations (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL  
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO organizations (name, description, address, telephone, email)
 VALUES
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS users (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE users ADD CONSTRAINT users_role_id_foreign FOREIGN KEY (role_id) REFERENCES user_roles(id);
 ALTER TABLE users ADD CONSTRAINT users_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS contact_types (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO contact_types (name, description)
 VALUES
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS contact_providers (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO contact_providers (name, description)
 VALUES 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS user_contacts (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE user_contacts ADD CONSTRAINT user_contacts_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE user_contacts ADD CONSTRAINT user_contacts_type_id_foreign FOREIGN KEY (type_id) REFERENCES contact_types(id);
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS project_types (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8; 
+); 
 
 INSERT INTO project_types (name, description) 
 VALUES 
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS projects(
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE projects ADD CONSTRAINT projects_project_type_foreign FOREIGN KEY (project_type) REFERENCES project_types(id);
 ALTER TABLE projects ADD CONSTRAINT projects_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS meeting_types (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO meeting_types (name, description)
 VALUES
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE meetings ADD CONSTRAINT meetings_project_id_foreign FOREIGN KEY (project_id) REFERENCES meetings(id);
 ALTER TABLE meetings ADD CONSTRAINT meetings_recorder_id_foreign FOREIGN KEY (recorder_id) REFERENCES users(id);
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS meeting_action_types (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 INSERT INTO meeting_action_types (name, description)
 VALUES
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS meeting_actions (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE meeting_actions ADD CONSTRAINT meeting_actions_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id); 
 ALTER TABLE meeting_actions ADD CONSTRAINT meeting_actions_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS meeting_participants (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+);
 
 ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
