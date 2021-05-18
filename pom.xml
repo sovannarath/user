@@ -60,7 +60,6 @@
     		<artifactId>flyway-core</artifactId>
     		<version>6.5.7</version>
 		</dependency>
-
 		
 	</dependencies>
 
