@@ -1,3 +1,8 @@
+
+CREATE TYPE enum_gender AS ENUM('MALE', 'FEMALE');
+CREATE TYPE enum_meeting_status AS ENUM('ON_HOLD', 'NEXT_SCHEDULE', 'FINISHED');
+
+
 CREATE TABLE IF NOT EXISTS user_roles (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255),
@@ -39,7 +44,7 @@ VALUES
 CREATE TABLE IF NOT EXISTS users (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255),
-	gender ENUM('MALE', 'FEMALE'),
+	gender enum_gender,
 	date_of_birth DATE NULL, 
 	email VARCHAR(255) NULL,
 	password TEXT, 
@@ -183,7 +188,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 	discussion TEXT NULL,
 	conclusion TEXT NULL,
 	comment TEXT NULL,
-	status ENUM('ON_HOLD', 'NEXT_SCHEDULE', 'FINISHED'),
+	status enum_meeting_status,
 	next_schedule DATE NULL,
 	next_schedule_topic VARCHAR(255) NULL,
 	next_schedule_comment VARCHAR(255) NULL,
