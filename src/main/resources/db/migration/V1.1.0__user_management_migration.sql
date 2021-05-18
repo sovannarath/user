@@ -57,9 +57,9 @@ ALTER TABLE meetings ADD others TEXT NULL;
 ALTER TABLE meeting_actions RENAME TO meeting_discussion_logs;
 
 
-CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON project_tasks
+CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_agendas
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
-CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_task_logs
-    FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+/*CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_task_logs
+    FOR EACH ROW EXECUTE PROCEDURE update_timestamp();*/
 
