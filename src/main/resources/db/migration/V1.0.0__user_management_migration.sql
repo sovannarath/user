@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS meetings (
 ALTER TABLE meetings ADD CONSTRAINT meetings_project_id_foreign FOREIGN KEY (project_id) REFERENCES meetings(id);
 ALTER TABLE meetings ADD CONSTRAINT meetings_recorder_id_foreign FOREIGN KEY (recorder_id) REFERENCES users(id);
 ALTER TABLE meetings ADD CONSTRAINT meetings_checker_id_foreign FOREIGN KEY (checker_id) REFERENCES users(id);
-ALTER TABLE meetings ADD CONSTRAINT meetings_meeting_type_foreign FOREIGN KEY (meeting_type) REFERENCE meeting_types(id);
+ALTER TABLE meetings ADD CONSTRAINT meetings_meeting_type_foreign FOREIGN KEY (meeting_type) REFERENCES meeting_types(id);
 
 CREATE TABLE IF NOT EXISTS meeting_action_types (
 	id BIGSERIAL PRIMARY KEY,
