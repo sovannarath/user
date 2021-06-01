@@ -17,7 +17,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
@@ -34,11 +33,11 @@ public class Meeting {
 	private Time start_time;
 	private Time end_time;
 	private String location;
-	private String overview;
+	//private String overview;
 	private String objective;
-	private String problem;
-	private String opportunity;
-	private String discussion;
+	//private String problem;
+	//private String opportunity;
+	//private String discussion;
 	private String conclusion;
 	private String comment;
 	private String status;
@@ -68,6 +67,17 @@ public class Meeting {
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAction> actions;
 	
+	@OneToMany(mappedBy="meeting")
+	private List<MeetingAgenda> agendas;
+	
+	public List<MeetingAgenda> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(List<MeetingAgenda> agendas) {
+		this.agendas = agendas;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="meeting_type")
 	private MeetingType type;
@@ -89,7 +99,7 @@ public class Meeting {
 	}
 
 	public Meeting(long id, String name, Project project, int issue_number, Date date, Time start_time, Time end_time,
-			String location, String overview, String objective, String problem, String opportunity, String discussion,
+			String location, String overview, String objective,
 			String conclusion, String comment, String status, Date next_schedule, String next_schedule_topic,
 			String next_schedule_comment, User recorder, Date record_date, User checker, Date check_date,
 			byte is_active, Date created_at, Date updated_at, Date deleted_at) {
@@ -102,11 +112,7 @@ public class Meeting {
 		this.start_time = start_time;
 		this.end_time = end_time;
 		this.location = location;
-		this.overview = overview;
 		this.objective = objective;
-		this.problem = problem;
-		this.opportunity = opportunity;
-		this.discussion = discussion;
 		this.conclusion = conclusion;
 		this.comment = comment;
 		this.status = status;
@@ -203,44 +209,12 @@ public class Meeting {
 		this.location = location;
 	}
 
-	public String getOverview() {
-		return overview;
-	}
-
-	public void setOverview(String overview) {
-		this.overview = overview;
-	}
-
 	public String getObjective() {
 		return objective;
 	}
 
 	public void setObjective(String objective) {
 		this.objective = objective;
-	}
-
-	public String getProblem() {
-		return problem;
-	}
-
-	public void setProblem(String problem) {
-		this.problem = problem;
-	}
-
-	public String getOpportunity() {
-		return opportunity;
-	}
-
-	public void setOpportunity(String opportunity) {
-		this.opportunity = opportunity;
-	}
-
-	public String getDiscussion() {
-		return discussion;
-	}
-
-	public void setDiscussion(String discussion) {
-		this.discussion = discussion;
 	}
 
 	public String getConclusion() {

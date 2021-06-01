@@ -4,14 +4,14 @@
 CREATE TABLE IF NOT EXISTS meeting_agendas (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
-	project_id BIGINT,
+	meeting_id BIGINT,
 	description TEXT NULL,
 	agenda_comment TEXT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
 );
-ALTER TABLE meeting_agendas ADD CONSTRAINT project_tasks_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id);
+ALTER TABLE meeting_agendas ADD CONSTRAINT meeting_agendas_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
 
 /* Alter Table */
 /* Drop unescessary column form meetings table*/

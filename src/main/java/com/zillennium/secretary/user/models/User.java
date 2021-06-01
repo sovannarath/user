@@ -57,9 +57,11 @@ public class User {
     @JoinColumn(name = "reference")
 	private User reference;
 	
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization"}) 
 	@OneToMany(mappedBy="reference")
 	private List<User> children;
 	
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy="user")
 	private List<UserContact> contacts;
 	

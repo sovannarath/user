@@ -34,6 +34,7 @@ public class MeetingCtrl {
 	@CrossOrigin
 	@RequestMapping(value="/meetings", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody Meeting meeting) {
+		//System.out.println(meeting.getName());
 		return new ResponseEntity<>(service.create(meeting), HttpStatus.OK);
 	}
 

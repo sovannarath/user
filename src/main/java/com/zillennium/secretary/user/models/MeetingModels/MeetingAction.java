@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
-@Table(name="meeting_actions")
+@Table(name="meeting_discussion_logs")
 public class MeetingAction {
 
 	@Id
@@ -32,6 +32,10 @@ public class MeetingAction {
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
+	@ManyToOne
+	@JoinColumn(name="agenda_id")
+	private MeetingAgenda agenda;
+	
 	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -41,12 +45,14 @@ public class MeetingAction {
 	@JoinColumn(name="action_id")
 	private MeetingActionType action_type;
 	
+	/*
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingParticipant> participants;
+	*/
 	
 	private String description;
 	private String note;
-	private byte is_active;
+	private byte is_active = 1;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
