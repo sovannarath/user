@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.zillennium.secretary.user.messages.ResponseMessage;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingAgenda;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingAttachment;
 import com.zillennium.secretary.user.services.MeetingAttachmentService.MeetingAttachmentServiceImpl;
@@ -26,6 +27,7 @@ import com.zillennium.secretary.user.services.UploadService.FilesStorageService;
 @Controller
 @CrossOrigin("http://localhost:8888")
 public class MeetingAttachmentCtrl {
+	
 	@Autowired
 	private MeetingAttachmentServiceImpl service;
 	
@@ -51,12 +53,17 @@ public class MeetingAttachmentCtrl {
 			storageService.save(file);
 		    message = "Uploaded the file successfully: " + file.getOriginalFilename();
 		    
+		    String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+		            .replacePath(null)
+		            .build()
+		            .toUriString();
+		    
 		    agenda.setId(agenda_id);
 		    attach.setAgenda(agenda);
-		    attach.setDomain_name(request.getScheme() + "://" + request.getServerName() + request.getRequestURI());
+		    attach.setDomain_name(baseUrl);
 		    attach.setAttachment_path(file.getOriginalFilename());
 		    attach.setAttachment_type("FILE");
-		    System.out.println(message);
+		    
 			return new ResponseEntity<>(service.create(attach), HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, String> map = new HashMap<String, String>();

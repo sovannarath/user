@@ -48,7 +48,6 @@ public class FilesCtrl {
 	      String filename = path.getFileName().toString();
 	      String url = MvcUriComponentsBuilder
 	          .fromMethodName(FilesCtrl.class, "getFile", path.getFileName().toString()).build().toString();
-
 	      return new FileInfo(filename, url);
 	    }).collect(Collectors.toList());
 

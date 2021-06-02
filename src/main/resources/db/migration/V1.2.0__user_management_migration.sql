@@ -38,3 +38,5 @@ ALTER TABLE meeting_group_users ADD CONSTRAINT meeting_group_participant_meeting
 ALTER TABLE meeting_discussion_logs ADD COLUMN agenda_id BIGINT AFTER meeting_id;
 ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_agenda_id_foreign FOREIGN KEY (agenda_id) REFERENCES meeting_agendas(id);
 
+ALTER TABLE meeting_discussion_logs ADD COLUMN related_action BIGINT AFTER description;
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_related_action_foreign FOREIGN KEY (related_action) REFERENCES meeting_discussion_logs(id);
