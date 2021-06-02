@@ -20,33 +20,33 @@ public class MeetingAgendaCtrl {
 	@Autowired
 	private MeetingAgendaService service;
 	
-	@RequestMapping(value="/meeting-agendas", method=RequestMethod.GET)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting-agendas/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting-agendas", method=RequestMethod.POST)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody MeetingAgenda agenda) {
 		return new ResponseEntity<>(service.create(agenda), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting-agendas/{id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody MeetingAgenda agenda, long id) {
 		return new ResponseEntity<>(service.update(agenda, id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting-agendas/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
 	@CrossOrigin
-	@RequestMapping(value="/meeting-agendas/search", method=RequestMethod.GET)
+	@RequestMapping(value="/meetings/{meeting_id}/agendas/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(String str) {
 		return null;
 	}
