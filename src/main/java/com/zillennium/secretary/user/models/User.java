@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.MeetingModels.Meeting;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingAction;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
+import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipantGroup;
 import com.zillennium.secretary.user.models.MeetingModels.Project;
 
 @Entity
@@ -37,8 +38,7 @@ public class User {
 	private String password;
 	private String remember_token;
 	private String api_token;
-	
-	
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_at;

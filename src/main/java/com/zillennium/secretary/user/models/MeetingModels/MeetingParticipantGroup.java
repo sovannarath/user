@@ -1,16 +1,20 @@
 package com.zillennium.secretary.user.models.MeetingModels;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.zillennium.secretary.user.models.User;
 
 @Entity
 @Table(name="meeting_participant_groups")
@@ -20,6 +24,9 @@ public class MeetingParticipantGroup {
 	private long id;
 	private String name;
 	private String description;
+	
+	@OneToMany(mappedBy = "pGroup")
+	private List<User> user;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -34,6 +41,14 @@ public class MeetingParticipantGroup {
 	public MeetingParticipantGroup() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
 	}
 
 	public MeetingParticipantGroup(long id, String name, String description, Date created_at, Date updated_at,

@@ -14,32 +14,36 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipantGrou
 import com.zillennium.secretary.user.services.MeetingParticipantGroup.MeetingParticipantGroupServiceImpl;
 
 @Controller
-@CrossOrigin("http://localhost:8888")
 public class MeetingParticipantGroupCtrl {
 	
 	@Autowired
 	private MeetingParticipantGroupServiceImpl service;
 	
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participant-groups", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participant-groups/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participant-groups", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody MeetingParticipantGroup group) {
 		return new ResponseEntity<>(service.create(group), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participant-groups/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody MeetingParticipantGroup group, long id) {
 		return new ResponseEntity<>(service.update(group, id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting-participant-groups/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
@@ -50,4 +54,5 @@ public class MeetingParticipantGroupCtrl {
 	public ResponseEntity<Object> search(String str) {
 		return null;
 	}
+	
 }
