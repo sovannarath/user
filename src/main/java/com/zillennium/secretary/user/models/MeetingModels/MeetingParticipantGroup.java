@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
 @Entity
@@ -25,8 +26,9 @@ public class MeetingParticipantGroup {
 	private String name;
 	private String description;
 	
+	@JsonIgnoreProperties({"pGroup"})
 	@OneToMany(mappedBy = "pGroup")
-	private List<User> user;
+	private List<MeetingGroupParticipant> participant;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,13 +45,19 @@ public class MeetingParticipantGroup {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<User> getUser() {
-		return user;
+	
+
+	public List<MeetingGroupParticipant> getParticipant() {
+		return participant;
 	}
 
-	public void setUser(List<User> user) {
-		this.user = user;
+
+
+	public void setParticipant(List<MeetingGroupParticipant> participant) {
+		this.participant = participant;
 	}
+
+
 
 	public MeetingParticipantGroup(long id, String name, String description, Date created_at, Date updated_at,
 			Date deleted_at) {

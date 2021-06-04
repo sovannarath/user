@@ -14,32 +14,36 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingAgenda;
 import com.zillennium.secretary.user.services.MeetingAgendaService.MeetingAgendaService;
 
 @Controller
-@CrossOrigin("http://localhost:8888")
 public class MeetingAgendaCtrl {
 	
 	@Autowired
 	private MeetingAgendaService service;
 	
+	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody MeetingAgenda agenda) {
 		return new ResponseEntity<>(service.create(agenda), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody MeetingAgenda agenda, long id) {
 		return new ResponseEntity<>(service.update(agenda, id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);

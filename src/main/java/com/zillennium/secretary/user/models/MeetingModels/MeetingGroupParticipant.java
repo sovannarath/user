@@ -14,18 +14,24 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.zillennium.secretary.user.models.User;
+
 @Entity
-@Table(name="meeting_groups_users")
+@Table(name="meeting_group_users")
 public class MeetingGroupParticipant {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private String name;
-	private String description;
 	
 	@ManyToOne
 	@JoinColumn(name="meeting_group_id")
 	private MeetingParticipantGroup pGroup;
+	
+	@JsonIgnoreProperties({"reference", "children", "meetings", "meeting_records", "meeting_actions", "meeting_participateds", "projects", "groups", "contacts", "organization"})
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -36,18 +42,32 @@ public class MeetingGroupParticipant {
 	private Date updated_at;
 	
 	private Date deleted_at;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public MeetingParticipantGroup getpGroup() {
+		return pGroup;
+	}
+
+	public void setpGroup(MeetingParticipantGroup pGroup) {
+		this.pGroup = pGroup;
+	}
 
 	public MeetingGroupParticipant() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MeetingGroupParticipant(long id, String name, String description, Date created_at, Date updated_at,
+	public MeetingGroupParticipant(long id, Date created_at, Date updated_at,
 			Date deleted_at) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.description = description;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
@@ -59,22 +79,6 @@ public class MeetingGroupParticipant {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public Date getCreated_at() {

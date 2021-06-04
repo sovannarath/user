@@ -20,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.MeetingModels.Meeting;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingAction;
+import com.zillennium.secretary.user.models.MeetingModels.MeetingGroupParticipant;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipantGroup;
 import com.zillennium.secretary.user.models.MeetingModels.Project;
@@ -84,6 +85,17 @@ public class User {
 	
 	@OneToMany(mappedBy="manager")
 	private List<Project> projects;
+	
+	@OneToMany(mappedBy="user")
+	private List<MeetingGroupParticipant> groups;
+
+	public List<MeetingGroupParticipant> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<MeetingGroupParticipant> groups) {
+		this.groups = groups;
+	}
 
 	public User() {
 		super();

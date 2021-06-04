@@ -15,7 +15,7 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
 import com.zillennium.secretary.user.services.UserInvolvedMeetingService.MeetingParticipantService;
 
 @RestController
-@CrossOrigin("http://localhost:8888")
+@CrossOrigin("http://localhost:8081")
 public class MeetingPaticipantCtrl {
 
 	@Autowired
