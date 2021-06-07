@@ -21,8 +21,8 @@ public class MeetingAgendaCtrl {
 	
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.GET)
-	public ResponseEntity<Object> index() {
-		return new ResponseEntity<>(service.all(), HttpStatus.OK);
+	public ResponseEntity<Object> index(@PathVariable("meeting_id") long meeting_id) {
+		return new ResponseEntity<>(service.getAllAgendaByMeetingId(meeting_id), HttpStatus.OK);
 	}
 
 	@CrossOrigin
@@ -33,13 +33,13 @@ public class MeetingAgendaCtrl {
 
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas", method=RequestMethod.POST)
-	public ResponseEntity<Object> create(@RequestBody MeetingAgenda agenda) {
+	public ResponseEntity<Object> create(@PathVariable("meeting_id") long meeting_id, @RequestBody MeetingAgenda agenda) {
 		return new ResponseEntity<>(service.create(agenda), HttpStatus.OK);
 	}
 
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{meeting_id}/agendas/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> update(@RequestBody MeetingAgenda agenda, long id) {
+	public ResponseEntity<Object> update(@RequestBody MeetingAgenda agenda,@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.update(agenda, id), HttpStatus.OK);
 	}
 

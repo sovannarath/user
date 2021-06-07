@@ -51,4 +51,10 @@ public class MeetingAgendaService implements MeetingAgendaInterface{
 		return null;
 	}
 
+	@Override
+	public List<MeetingAgenda> getAllAgendaByMeetingId(long meeting_id) {
+		// TODO Auto-generated method stub
+		return meetingAgendaRepo.getAllAgendaByMeetingId(meeting_id);
+	}
+
 }

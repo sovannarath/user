@@ -45,6 +45,7 @@ public class Meeting {
 	private String next_schedule_topic;
 	private String next_schedule_comment;
 	
+	@JsonIgnoreProperties({"organization", "manager"})
 	@ManyToOne
 	@JoinColumn(name="project_id")
 	private Project project;
@@ -67,6 +68,7 @@ public class Meeting {
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAction> actions;
 	
+	@JsonIgnoreProperties("meeting")
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAgenda> agendas;
 	

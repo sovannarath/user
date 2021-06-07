@@ -33,6 +33,15 @@ public class MeetingAgenda {
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
+	public List<MeetingAction> getDiscussion() {
+		return discussion;
+	}
+
+	public void setDiscussion(List<MeetingAction> discussion) {
+		this.discussion = discussion;
+	}
+
+	@JsonIgnoreProperties("agenda")
 	@OneToMany(mappedBy="agenda")
 	private List<MeetingAttachment> attachment;
 	

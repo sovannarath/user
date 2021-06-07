@@ -11,4 +11,5 @@ public interface MeetingAgendaInterface {
 	public MeetingAgenda update(MeetingAgenda meeting, long id);
 	public Boolean delete(long id);
 	public List<MeetingAgenda> search(String str);
+	List<MeetingAgenda> getAllAgendaByMeetingId(long meeting_id);
 }
