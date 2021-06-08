@@ -41,9 +41,9 @@ public class MeetingAgenda {
 		this.discussion = discussion;
 	}
 
-	@JsonIgnoreProperties("agenda")
+	//@JsonIgnoreProperties("agenda")
 	@OneToMany(mappedBy="agenda")
-	private List<MeetingAttachment> attachment;
+	private List<MeetingAttachment> attachments;
 	
 	@OneToMany(mappedBy="agenda")
 	private List<MeetingAction> discussion;
@@ -60,14 +60,14 @@ public class MeetingAgenda {
 
 	
 	public MeetingAgenda(long id, String name, String description, String agenda_comment, Meeting meeting,
-			List<MeetingAttachment> attachment, Date created_at, Date updated_at, Date deleted_at) {
+			List<MeetingAttachment> attachments, Date created_at, Date updated_at, Date deleted_at) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.agenda_comment = agenda_comment;
 		this.meeting = meeting;
-		this.attachment = attachment;
+		this.attachments = attachments;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
@@ -102,12 +102,12 @@ public class MeetingAgenda {
 		this.description = description;
 	}
 
-	public List<MeetingAttachment> getAttachment() {
-		return attachment;
+	public List<MeetingAttachment> getAttachments() {
+		return attachments;
 	}
 
-	public void setAttachment(List<MeetingAttachment> attachment) {
-		this.attachment = attachment;
+	public void setAttachments(List<MeetingAttachment> attachments) {
+		this.attachments = attachments;
 	}
 
 	public String getAgenda_comment() {

@@ -25,7 +25,6 @@ import com.zillennium.secretary.user.services.MeetingAttachmentService.MeetingAt
 import com.zillennium.secretary.user.services.UploadService.FilesStorageService;
 
 @Controller
-@CrossOrigin("http://localhost:8888")
 public class MeetingAttachmentCtrl {
 	
 	@Autowired
@@ -34,16 +33,19 @@ public class MeetingAttachmentCtrl {
 	@Autowired
 	FilesStorageService storageService;
 	
+	@CrossOrigin
 	@RequestMapping(value="meeting-agendas/{agenda_id}/attachments", method=RequestMethod.GET)
 	public ResponseEntity<Object> index() {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="meeting-agendas/{agenda_id}/attachments/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="meeting-agendas/{agenda_id}/attachments", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(HttpServletRequest request, @PathVariable("agenda_id") long agenda_id, @RequestParam("file") MultipartFile file) {
 		String message = "";
@@ -74,11 +76,13 @@ public class MeetingAttachmentCtrl {
 		}
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="meeting-agendas/{agenda_id}/attachments/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Object> update(@RequestBody MeetingAttachment attach, long id) {
 		return new ResponseEntity<>(service.update(attach, id), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="meeting-agendas/{agenda_id}/attachments/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);

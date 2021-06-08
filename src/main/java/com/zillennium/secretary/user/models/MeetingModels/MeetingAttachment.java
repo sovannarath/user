@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="meeting_attachments")
 public class MeetingAttachment {
@@ -25,6 +27,7 @@ public class MeetingAttachment {
 	
 	private String attachment_type;
 	
+	@JsonIgnoreProperties({"discussion", "meeting", "attachments"})
 	@ManyToOne
 	@JoinColumn(name="agenda_id")
 	private MeetingAgenda agenda;
