@@ -28,25 +28,26 @@ public class MeetingAgenda {
 	private String description;
 	private String agenda_comment;
 	
-	@JsonIgnoreProperties({"project", "manager", "recorder", "checker", "actions"})
+	@JsonIgnoreProperties({"project", "manager", "recorder", "checker", "actions", "agendas"})
 	@ManyToOne
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
-	public List<MeetingAction> getDiscussion() {
-		return discussion;
+	public List<MeetingAction> getDiscussions() {
+		return discussions;
 	}
 
-	public void setDiscussion(List<MeetingAction> discussion) {
-		this.discussion = discussion;
+	@JsonIgnoreProperties({"meeting"})
+	public void setDiscussions(List<MeetingAction> discussions) {
+		this.discussions = discussions;
 	}
 
-	//@JsonIgnoreProperties("agenda")
+	@JsonIgnoreProperties("agenda")
 	@OneToMany(mappedBy="agenda")
 	private List<MeetingAttachment> attachments;
 	
 	@OneToMany(mappedBy="agenda")
-	private List<MeetingAction> discussion;
+	private List<MeetingAction> discussions;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -59,8 +60,11 @@ public class MeetingAgenda {
 	private Date deleted_at;
 
 	
+	
+
 	public MeetingAgenda(long id, String name, String description, String agenda_comment, Meeting meeting,
-			List<MeetingAttachment> attachments, Date created_at, Date updated_at, Date deleted_at) {
+			List<MeetingAttachment> attachments, List<MeetingAction> discussions, Date created_at, Date updated_at,
+			Date deleted_at) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -68,6 +72,7 @@ public class MeetingAgenda {
 		this.agenda_comment = agenda_comment;
 		this.meeting = meeting;
 		this.attachments = attachments;
+		this.discussions = discussions;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;

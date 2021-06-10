@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,11 +33,12 @@ public class MeetingAction {
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
+	@JsonIgnoreProperties({"attachments", "meeting", "discussions"})
 	@ManyToOne
 	@JoinColumn(name="agenda_id")
 	private MeetingAgenda agenda;
 	
-	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds", "role", "groups", })
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
@@ -45,11 +47,38 @@ public class MeetingAction {
 	@JoinColumn(name="action_id")
 	private MeetingActionType action_type;
 	
-	/*
-	@OneToMany(mappedBy="meeting")
-	private List<MeetingParticipant> participants;
-	*/
+	@JsonIgnoreProperties({"action_type", "user", "agenda", "meeting"})
+	@OneToOne
+	@JoinColumn(name="related_action", referencedColumnName="id")
+	private MeetingAction related_action;
 	
+	@OneToOne(mappedBy="related_action")
+	private MeetingAction action;
+	
+	public MeetingAgenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(MeetingAgenda agenda) {
+		this.agenda = agenda;
+	}
+
+	public MeetingAction getRelated_action() {
+		return related_action;
+	}
+
+	public void setRelated_action(MeetingAction related_action) {
+		this.related_action = related_action;
+	}
+
+	public MeetingAction getAction() {
+		return action;
+	}
+
+	public void setAction(MeetingAction action) {
+		this.action = action;
+	}
+
 	private String description;
 	private String note;
 	private byte is_active = 1;
