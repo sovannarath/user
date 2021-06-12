@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
@@ -33,11 +34,7 @@ public class Meeting {
 	private Time start_time;
 	private Time end_time;
 	private String location;
-	//private String overview;
 	private String objective;
-	//private String problem;
-	//private String opportunity;
-	//private String discussion;
 	private String conclusion;
 	private String comment;
 	private String status;
@@ -65,9 +62,11 @@ public class Meeting {
 	private Date check_date;
 	private byte is_active;
 	
+	//@JsonIgnore
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAction> actions;
 	
+	//@JsonIgnore
 	@JsonIgnoreProperties("meeting")
 	@OneToMany(mappedBy="meeting")
 	private List<MeetingAgenda> agendas;

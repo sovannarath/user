@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.User;
 
@@ -28,11 +29,13 @@ public class MeetingAction {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	//@JsonIgnore
 	@JsonIgnoreProperties({"project", "manager", "recorder", "checker", "actions"})
 	@ManyToOne
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
+	//@JsonIgnore
 	@JsonIgnoreProperties({"attachments", "meeting", "discussions"})
 	@ManyToOne
 	@JoinColumn(name="agenda_id")
@@ -52,8 +55,9 @@ public class MeetingAction {
 	@JoinColumn(name="related_action", referencedColumnName="id")
 	private MeetingAction related_action;
 	
+	/*@JsonIgnore
 	@OneToOne(mappedBy="related_action")
-	private MeetingAction action;
+	private MeetingAction action;*/
 	
 	public MeetingAgenda getAgenda() {
 		return agenda;
@@ -71,13 +75,13 @@ public class MeetingAction {
 		this.related_action = related_action;
 	}
 
-	public MeetingAction getAction() {
+	/*public MeetingAction getAction() {
 		return action;
 	}
 
 	public void setAction(MeetingAction action) {
 		this.action = action;
-	}
+	}*/
 
 	private String description;
 	private String note;

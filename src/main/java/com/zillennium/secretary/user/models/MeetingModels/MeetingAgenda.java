@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -33,19 +34,11 @@ public class MeetingAgenda {
 	@JoinColumn(name="meeting_id")
 	private Meeting meeting;
 	
-	public List<MeetingAction> getDiscussions() {
-		return discussions;
-	}
-
-	@JsonIgnoreProperties({"meeting"})
-	public void setDiscussions(List<MeetingAction> discussions) {
-		this.discussions = discussions;
-	}
-
 	@JsonIgnoreProperties("agenda")
 	@OneToMany(mappedBy="agenda")
 	private List<MeetingAttachment> attachments;
 	
+	@JsonIgnoreProperties({"meeting"})
 	@OneToMany(mappedBy="agenda")
 	private List<MeetingAction> discussions;
 	
@@ -58,9 +51,6 @@ public class MeetingAgenda {
 	private Date updated_at;
 	
 	private Date deleted_at;
-
-	
-	
 
 	public MeetingAgenda(long id, String name, String description, String agenda_comment, Meeting meeting,
 			List<MeetingAttachment> attachments, List<MeetingAction> discussions, Date created_at, Date updated_at,
@@ -81,6 +71,14 @@ public class MeetingAgenda {
 	public MeetingAgenda() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public List<MeetingAction> getDiscussions() {
+		return discussions;
+	}
+	
+	public void setDiscussions(List<MeetingAction> discussions) {
+		this.discussions = discussions;
 	}
 
 	public long getId() {
