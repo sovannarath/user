@@ -3,6 +3,7 @@ package com.zillennium.secretary.user.models.MeetingModels;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,8 +52,8 @@ public class MeetingAction {
 	private MeetingActionType action_type;
 	
 	@JsonIgnoreProperties({"action_type", "user", "agenda", "meeting"})
-	@OneToOne
-	@JoinColumn(name="related_action", referencedColumnName="id")
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="related_action")
 	private MeetingAction related_action;
 	
 	/*@JsonIgnore

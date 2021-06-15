@@ -45,7 +45,7 @@ public class MeetingActionCtrl {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value="/meeting-discussions", method=RequestMethod.DELETE)
+	@RequestMapping(value="/meeting-discussions/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
