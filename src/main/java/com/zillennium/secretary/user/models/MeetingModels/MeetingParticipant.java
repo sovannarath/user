@@ -25,7 +25,7 @@ public class MeetingParticipant {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
+	@JsonIgnoreProperties({"reference", "children", "groups", "meetings", "meeting_records", "projects", "meeting_actions", "meeting_participateds"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

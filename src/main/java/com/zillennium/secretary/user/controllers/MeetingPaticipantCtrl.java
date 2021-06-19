@@ -15,37 +15,42 @@ import com.zillennium.secretary.user.models.MeetingModels.MeetingParticipant;
 import com.zillennium.secretary.user.services.UserInvolvedMeetingService.MeetingParticipantService;
 
 @RestController
-@CrossOrigin("http://localhost:8081")
 public class MeetingPaticipantCtrl {
 
 	@Autowired
 	private MeetingParticipantService service;
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting/{meeting_id}/participants", method=RequestMethod.GET)
 	public ResponseEntity<Object> index(@PathVariable("meeting_id") long meeting_id) {
 		return new ResponseEntity<>(service.all(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting/{meeting_id}/participants/{user_id}", method=RequestMethod.GET)
+	@CrossOrigin
+	@RequestMapping(value="/meeting/{meeting_id}/participants/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("meeting_id") long meeting_id, @PathVariable("id") long id) {
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting/{meeting_id}/participants/{user_id}", method=RequestMethod.POST)
+	@CrossOrigin
+	@RequestMapping(value="/meeting/{meeting_id}/participants", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@PathVariable("meeting_id") long meeting_id, @RequestBody MeetingParticipant meetingParticipant) {
 		return new ResponseEntity<>(service.create(meetingParticipant), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting/{meeting_id}/participants/{user_id}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> update(@PathVariable("meeting_id") long meeting_id, @RequestBody MeetingParticipant meetingParticipant, @PathVariable("id") long id) {
+	@CrossOrigin
+	@RequestMapping(value="/meeting/{meeting_id}/participants/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Object> update(@PathVariable("meeting_id") long meeting_id, @PathVariable("id") long id, @RequestBody MeetingParticipant meetingParticipant) {
 		return new ResponseEntity<>(service.update(meetingParticipant, id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/meeting/{meeting_id}/participants/{user_id}", method=RequestMethod.DELETE)
+	@CrossOrigin
+	@RequestMapping(value="/meeting/{meeting_id}/participants/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("meeting_id") long meeting_id, @PathVariable("id") long id) {
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@RequestMapping(value="/meeting/{meeting_id}/participants/search", method=RequestMethod.GET)
 	public ResponseEntity<Object> search(@PathVariable("meeting_id") long meeting_id, @RequestParam("search") String str) {
 		return null;
