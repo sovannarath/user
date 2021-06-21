@@ -3,6 +3,7 @@ package com.zillennium.secretary.user.models.MeetingModels;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.zillennium.secretary.user.models.User;
 
 @Entity
 @Table(name="meeting_participant_groups")
@@ -27,8 +27,8 @@ public class MeetingParticipantGroup {
 	private String description;
 	
 	@JsonIgnoreProperties({"pGroup"})
-	@OneToMany(mappedBy = "pGroup")
-	private List<MeetingGroupParticipant> participant;
+	@OneToMany(mappedBy = "pGroup", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<MeetingGroupParticipant> participants;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -47,14 +47,14 @@ public class MeetingParticipantGroup {
 
 	
 
-	public List<MeetingGroupParticipant> getParticipant() {
-		return participant;
+	public List<MeetingGroupParticipant> getParticipants() {
+		return participants;
 	}
 
 
 
-	public void setParticipant(List<MeetingGroupParticipant> participant) {
-		this.participant = participant;
+	public void setParticipants(List<MeetingGroupParticipant> participants) {
+		this.participants = participants;
 	}
 
 

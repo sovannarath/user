@@ -66,7 +66,7 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<UserContact> contacts;
 	
-	@JsonIgnoreProperties("users")
+	@JsonIgnoreProperties({"users", "projects"})
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;

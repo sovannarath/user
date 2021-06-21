@@ -28,7 +28,7 @@ public class MeetingGroupParticipant {
 	@JoinColumn(name="meeting_group_id")
 	private MeetingParticipantGroup pGroup;
 	
-	@JsonIgnoreProperties({"reference", "children", "meetings", "meeting_records", "meeting_actions", "meeting_participateds", "projects", "groups", "contacts", "organization"})
+	@JsonIgnoreProperties({"reference", "children", "meetings", "meeting_records", "meeting_actions", "meeting_participateds", "projects", "groups"/*, "contacts", "organization"*/})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
