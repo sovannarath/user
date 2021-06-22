@@ -2,7 +2,6 @@
 CREATE TYPE enum_gender AS ENUM('MALE', 'FEMALE');
 CREATE TYPE enum_meeting_status AS ENUM('ON_HOLD', 'NEXT_SCHEDULE', 'FINISHED');
 
-
 CREATE TABLE IF NOT EXISTS user_roles (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255),
@@ -58,7 +57,6 @@ CREATE TABLE IF NOT EXISTS users (
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL
 );
-
 ALTER TABLE users ADD CONSTRAINT users_role_id_foreign FOREIGN KEY (role_id) REFERENCES user_roles(id);
 ALTER TABLE users ADD CONSTRAINT users_organization_id_foreign FOREIGN KEY (organization_id) REFERENCES organizations(id);
 ALTER TABLE users ADD CONSTRAINT users_reference_foreign FOREIGN KEY (reference) REFERENCES organizations(id);
@@ -92,7 +90,7 @@ CREATE TABLE IF NOT EXISTS contact_providers (
 );
 
 INSERT INTO contact_providers (name, description)
-VALUES 
+VALUES
 ('GOOGLE', 'Google company g-mail service provider'),
 ('YAHOO', 'Yahoo! company mail service provider'), 
 ('SMART_MOBILE', 'Smart Mobile service provider'),
@@ -181,13 +179,10 @@ CREATE TABLE IF NOT EXISTS meetings (
 	start_time TIME NULL,
 	end_time TIME NULL,
 	location VARCHAR(255) NULL,
-	overview TEXT NULL,
 	objective TEXT,
-	problem TEXT NULL,
-	opportunity TEXT NULL,
-	discussion TEXT NULL,
 	conclusion TEXT NULL,
 	comment TEXT NULL,
+	others TEXT NULL,
 	status enum_meeting_status,
 	next_schedule DATE NULL,
 	next_schedule_topic VARCHAR(255) NULL,
@@ -222,12 +217,14 @@ VALUES
 ('ASK_QUESTION', 'Ask a question in meeting.'),
 ('ANSWER_QUESTION', 'Answer a question in meeting.');
 
-CREATE TABLE IF NOT EXISTS meeting_actions (
+CREATE TABLE IF NOT EXISTS meeting_discussion_logs (
 	id BIGSERIAL PRIMARY KEY,
 	meeting_id BIGINT,
+	agenda_id BIGINT,
 	user_id BIGINT,
 	action_id BIGINT,
 	description TEXT, 
+	related_action BIGINT,
 	note TEXT NULL,
 	is_active SMALLINT DEFAULT 1,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -235,9 +232,11 @@ CREATE TABLE IF NOT EXISTS meeting_actions (
 	deleted_at TIMESTAMP NULL
 );
 
-ALTER TABLE meeting_actions ADD CONSTRAINT meeting_actions_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id); 
-ALTER TABLE meeting_actions ADD CONSTRAINT meeting_actions_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
-ALTER TABLE meeting_actions ADD CONSTRAINT meeting_actions_action_id_foreign FOREIGN KEY (action_id) REFERENCES meeting_action_types(id);
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_ageda_id_foreign FOREIGN KEY (agenda_id) REFERENCES meeting_agendas(id);
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_action_id_foreign FOREIGN KEY (action_id) REFERENCES meeting_action_types(id);
+ALTER TABLE meeting_discussion_logs ADD CONSTRAINT meeting_discussion_logs_related_action_foreign FOREIGN KEY (related_action) REFERENCES meeting_discussion_logs(id);
 
 CREATE TABLE IF NOT EXISTS meeting_participants (
 	id BIGSERIAL PRIMARY KEY,
@@ -252,12 +251,62 @@ ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_user_id_for
 ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
 
 
+CREATE TABLE IF NOT EXISTS meeting_agendas (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	meeting_id BIGINT,
+	description TEXT NULL,
+	agenda_comment TEXT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	deleted_at TIMESTAMP NULL
+);
+ALTER TABLE meeting_agendas ADD CONSTRAINT meeting_agendas_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
+
+/* Table Meeting Attachment */
+CREATE TABLE IF NOT EXISTS meeting_attachments (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	attachment_path VARCHAR(255) NOT NULL,
+	domain_name VARCHAR(255) NOT NULL,
+	agenda_id BIGINT NOT NULL,
+	attachment_type VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	deleted_at TIMESTAMP NULL
+);
+ALTER TABLE meeting_attachments ADD CONSTRAINT meeting_attachments_agenda_id_foreign FOREIGN KEY (agenda_id) REFERENCES meeting_agendas(id);
+
+/* Table Participant Group */
+CREATE TABLE IF NOT EXISTS meeting_participant_groups (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	description TEXT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	deleted_at TIMESTAMP NULL
+);
+
+/* Table Group participant */
+CREATE TABLE IF NOT EXISTS meeting_group_users (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT,
+	meeting_group_id BIGINT,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	deleted_at TIMESTAMP NULL
+);
+ALTER TABLE meeting_group_users ADD CONSTRAINT meeting_group_participant_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE meeting_group_users ADD CONSTRAINT meeting_group_participant_meeting_group_id_foreign FOREIGN KEY (meeting_group_id) REFERENCES meeting_participant_groups(id);
+
+
+
 CREATE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
     BEGIN
         NEW.modified := current_timestamp;
         RETURN NEW;
     END;
 $update_timestamp$ LANGUAGE plpgsql;
+
 CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON user_roles
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
     
@@ -295,5 +344,8 @@ CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_actions
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_participants
+    FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+    
+CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_agendas
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
