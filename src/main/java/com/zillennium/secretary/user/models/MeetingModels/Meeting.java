@@ -31,8 +31,8 @@ public class Meeting {
 	private String name;
 	private int issue_number;
 	private Date date;
-	private Time start_time;
-	private Time end_time;
+	private String start_time;
+	private String end_time;
 	private String location;
 	private String objective;
 	private String conclusion;
@@ -42,6 +42,26 @@ public class Meeting {
 	private String next_schedule_topic;
 	private String next_schedule_comment;
 	
+	
+	
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+
+
 	@JsonIgnoreProperties({"organization", "manager"})
 	@ManyToOne
 	@JoinColumn(name="project_id")
@@ -99,15 +119,14 @@ public class Meeting {
 		super();
 	}
 
-	public Meeting(long id, String name, Project project, int issue_number, Date date, Time start_time, Time end_time,
-			String location, String overview, String objective,
-			String conclusion, String comment, String status, Date next_schedule, String next_schedule_topic,
-			String next_schedule_comment, User recorder, Date record_date, User checker, Date check_date,
-			byte is_active, Date created_at, Date updated_at, Date deleted_at) {
+	public Meeting(long id, String name, int issue_number, Date date, String start_time, String end_time,
+			String location, String objective, String conclusion, String comment, String status, Date next_schedule,
+			String next_schedule_topic, String next_schedule_comment, Project project, User recorder, Date record_date,
+			User checker, Date check_date, byte is_active, List<MeetingAction> actions, List<MeetingAgenda> agendas,
+			MeetingType type, Date created_at, Date updated_at, Date deleted_at) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.project = project;
 		this.issue_number = issue_number;
 		this.date = date;
 		this.start_time = start_time;
@@ -120,11 +139,15 @@ public class Meeting {
 		this.next_schedule = next_schedule;
 		this.next_schedule_topic = next_schedule_topic;
 		this.next_schedule_comment = next_schedule_comment;
+		this.project = project;
 		this.recorder = recorder;
 		this.record_date = record_date;
 		this.checker = checker;
 		this.check_date = check_date;
 		this.is_active = is_active;
+		this.actions = actions;
+		this.agendas = agendas;
+		this.type = type;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.deleted_at = deleted_at;
@@ -184,22 +207,6 @@ public class Meeting {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Time getStart_time() {
-		return start_time;
-	}
-
-	public void setStart_time(Time start_time) {
-		this.start_time = start_time;
-	}
-
-	public Time getEnd_time() {
-		return end_time;
-	}
-
-	public void setEnd_time(Time end_time) {
-		this.end_time = end_time;
 	}
 
 	public String getLocation() {

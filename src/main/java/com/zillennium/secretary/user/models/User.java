@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zillennium.secretary.user.models.MeetingModels.Meeting;
 import com.zillennium.secretary.user.models.MeetingModels.MeetingAction;
@@ -58,7 +59,7 @@ public class User {
     @JoinColumn(name = "reference")
 	private User reference;
 	
-	@JsonIgnoreProperties({"reference", "children", "contacts", "organization"}) 
+	@JsonIgnoreProperties({"reference", "children", "contacts", "organization", "groups", "meetings", "meeting_records", "meeting_actions", "meeting_participateds", "projects"}) 
 	@OneToMany(mappedBy="reference")
 	private List<User> children;
 	
@@ -83,9 +84,11 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<MeetingParticipant> meeting_participateds;
 	
+	@JsonIgnoreProperties({"manager"})
 	@OneToMany(mappedBy="manager")
 	private List<Project> projects;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<MeetingGroupParticipant> groups;
 

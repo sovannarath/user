@@ -28,25 +28,28 @@ public class MeetingCtrl {
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable("id") long id) {
+		//System.out.println("Get a meeting!");
 		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@CrossOrigin
 	@RequestMapping(value="/meetings", method=RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody Meeting meeting) {
-		//System.out.println(meeting.getName());
+		//System.out.println("Create Meeting!");
 		return new ResponseEntity<>(service.create(meeting), HttpStatus.OK);
 	}
 
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Object> update(@RequestBody Meeting meeting, long id) {
+	public ResponseEntity<Object> update(@RequestBody Meeting meeting, @PathVariable("id") long id) {
+		//System.out.println("Update Meeting!");
 		return new ResponseEntity<>(service.update(meeting, id), HttpStatus.OK);
 	}
 
 	@CrossOrigin
 	@RequestMapping(value="/meetings/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Object> destroy(@PathVariable("id") long id) {
+		//System.out.println("Delete a meeting!");
 		return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
 	}
 
