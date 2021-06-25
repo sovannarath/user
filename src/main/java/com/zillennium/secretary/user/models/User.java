@@ -121,7 +121,9 @@ public class User {
 		this.date_of_birth = date_of_birth;
 	}
 
-	public User(long id, String name, String gender, Date date_of_birth, String email, String password,
+	
+
+	public User(long id, String name, Gender gender, Date date_of_birth, String email, String password,
 			String remember_token, String api_token, Date created_at, Date updated_at, UserRole role, User reference,
 			List<User> children, List<UserContact> contacts, Organization organization, List<Meeting> meetings,
 			List<Meeting> meeting_records, List<MeetingAction> meeting_actions,
@@ -167,11 +169,11 @@ public class User {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
