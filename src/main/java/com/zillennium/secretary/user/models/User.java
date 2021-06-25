@@ -37,7 +37,7 @@ public class User {
 	private long id;
 	private String name;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	private Date date_of_birth;
