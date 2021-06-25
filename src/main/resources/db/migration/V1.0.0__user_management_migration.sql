@@ -339,7 +339,7 @@ CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meetings
 CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_action_types
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
     
-CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_actions
+CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_discussion_logs
     FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON meeting_participants
