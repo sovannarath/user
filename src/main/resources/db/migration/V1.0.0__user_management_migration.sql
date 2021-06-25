@@ -217,6 +217,18 @@ VALUES
 ('ASK_QUESTION', 'Ask a question in meeting.'),
 ('ANSWER_QUESTION', 'Answer a question in meeting.');
 
+CREATE TABLE IF NOT EXISTS meeting_agendas (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	meeting_id BIGINT,
+	description TEXT NULL,
+	agenda_comment TEXT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	deleted_at TIMESTAMP NULL
+);
+ALTER TABLE meeting_agendas ADD CONSTRAINT meeting_agendas_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
+
 CREATE TABLE IF NOT EXISTS meeting_discussion_logs (
 	id BIGSERIAL PRIMARY KEY,
 	meeting_id BIGINT,
@@ -249,19 +261,6 @@ CREATE TABLE IF NOT EXISTS meeting_participants (
 
 ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
-
-
-CREATE TABLE IF NOT EXISTS meeting_agendas (
-	id BIGSERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL,
-	meeting_id BIGINT,
-	description TEXT NULL,
-	agenda_comment TEXT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	deleted_at TIMESTAMP NULL
-);
-ALTER TABLE meeting_agendas ADD CONSTRAINT meeting_agendas_meeting_id_foreign FOREIGN KEY (meeting_id) REFERENCES meetings(id);
 
 /* Table Meeting Attachment */
 CREATE TABLE IF NOT EXISTS meeting_attachments (
