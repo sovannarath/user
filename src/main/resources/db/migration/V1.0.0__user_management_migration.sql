@@ -264,7 +264,7 @@ ALTER TABLE meeting_participants ADD CONSTRAINT meeting_participants_meeting_id_
 
 /* Table Meeting Attachment */
 CREATE TABLE IF NOT EXISTS meeting_attachments (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	id BIGSERIAL PRIMARY KEY,
 	attachment_path VARCHAR(255) NOT NULL,
 	domain_name VARCHAR(255) NOT NULL,
 	agenda_id BIGINT NOT NULL,
@@ -277,7 +277,7 @@ ALTER TABLE meeting_attachments ADD CONSTRAINT meeting_attachments_agenda_id_for
 
 /* Table Participant Group */
 CREATE TABLE IF NOT EXISTS meeting_participant_groups (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	description TEXT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS meeting_participant_groups (
 
 /* Table Group participant */
 CREATE TABLE IF NOT EXISTS meeting_group_users (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	id BIGSERIAL PRIMARY KEY,
 	user_id BIGINT,
 	meeting_group_id BIGINT,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
