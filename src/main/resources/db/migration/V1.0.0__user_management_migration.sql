@@ -302,7 +302,7 @@ ALTER TABLE meeting_group_users ADD CONSTRAINT meeting_group_participant_meeting
 
 CREATE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
     BEGIN
-        NEW.modified := current_timestamp;
+        NEW.updated_at := current_timestamp;
         RETURN NEW;
     END;
 $update_timestamp$ LANGUAGE plpgsql;
