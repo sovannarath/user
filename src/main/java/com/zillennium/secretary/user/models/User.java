@@ -35,11 +35,12 @@ public class User {
 	private long id;
 	private String name;
 	private String gender;
-	private String date_of_birth;
+	private Date date_of_birth;
 	private String email;
 	private String password;
 	private String remember_token;
 	private String api_token;
+	
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -105,11 +106,22 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(long id, String name, String gender, String date_of_birth, String email, String password,
+	
+
+	public Date getDate_of_birth() {
+		return date_of_birth;
+	}
+
+	public void setDate_of_birth(Date date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
+	public User(long id, String name, String gender, Date date_of_birth, String email, String password,
 			String remember_token, String api_token, Date created_at, Date updated_at, UserRole role, User reference,
 			List<User> children, List<UserContact> contacts, Organization organization, List<Meeting> meetings,
 			List<Meeting> meeting_records, List<MeetingAction> meeting_actions,
-			List<MeetingParticipant> meeting_participateds, List<Project> projects) {
+			List<MeetingParticipant> meeting_participateds, List<Project> projects,
+			List<MeetingGroupParticipant> groups) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -131,6 +143,7 @@ public class User {
 		this.meeting_actions = meeting_actions;
 		this.meeting_participateds = meeting_participateds;
 		this.projects = projects;
+		this.groups = groups;
 	}
 
 	public long getId() {
@@ -155,14 +168,6 @@ public class User {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public String getDate_of_birth() {
-		return date_of_birth;
-	}
-
-	public void setDate_of_birth(String date_of_birth) {
-		this.date_of_birth = date_of_birth;
 	}
 
 	public String getEmail() {
