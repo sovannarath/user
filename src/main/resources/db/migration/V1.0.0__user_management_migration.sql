@@ -1,5 +1,5 @@
 
-CREATE TYPE enum_gender AS ENUM('MALE', 'FEMALE');
+--CREATE TYPE enum_gender AS ENUM('MALE', 'FEMALE');
 CREATE TYPE enum_meeting_status AS ENUM('ON_HOLD', 'NEXT_SCHEDULE', 'FINISHED');
 
 CREATE TABLE IF NOT EXISTS user_roles (
@@ -43,7 +43,8 @@ VALUES
 CREATE TABLE IF NOT EXISTS users (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(255),
-	gender enum_gender,
+	--gender enum_gender,
+	gender VARCHAR(10),
 	date_of_birth DATE NULL, 
 	email VARCHAR(255) NULL,
 	password TEXT, 

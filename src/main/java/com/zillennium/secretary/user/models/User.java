@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +35,8 @@ public class User {
 	private long id;
 	private String name;
 	
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+	//@Enumerated(EnumType.STRING)
+	private String gender;
 	
 	private Date date_of_birth;
 	private String email;
@@ -113,17 +111,7 @@ public class User {
 
 	
 
-	public Date getDate_of_birth() {
-		return date_of_birth;
-	}
-
-	public void setDate_of_birth(Date date_of_birth) {
-		this.date_of_birth = date_of_birth;
-	}
-
-	
-
-	public User(long id, String name, Gender gender, Date date_of_birth, String email, String password,
+	public User(long id, String name, String gender, Date date_of_birth, String email, String password,
 			String remember_token, String api_token, Date created_at, Date updated_at, UserRole role, User reference,
 			List<User> children, List<UserContact> contacts, Organization organization, List<Meeting> meetings,
 			List<Meeting> meeting_records, List<MeetingAction> meeting_actions,
@@ -153,6 +141,24 @@ public class User {
 		this.groups = groups;
 	}
 
+	public Date getDate_of_birth() {
+		return date_of_birth;
+	}
+
+	public void setDate_of_birth(Date date_of_birth) {
+		this.date_of_birth = date_of_birth;
+	}
+
+	
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -167,14 +173,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
 	}
 
 	public String getEmail() {
